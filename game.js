@@ -15,7 +15,7 @@ function initializeGame() {
     score = 0;
     direction = 'RIGHT';
     document.getElementById('score').textContent = `Очки: ${score}`;
-    document.getElementById('restartBtn').style.display = 'none'; // Скрыть кнопку "Возродиться"
+    document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
     startGame();
 }
 
@@ -71,7 +71,7 @@ function checkCollision() {
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
-    clearInterval(gameInterval);
+    clearInterval(gameInterval); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
