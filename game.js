@@ -10,33 +10,34 @@ let gameInterval;
 
 // Функция для старта игры
 function startGame() {
-    gameInterval = setInterval(updateGame, 100);
+    gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
 }
 
 // Функция для обновления игры
 function updateGame() {
-    moveSnake();
-    checkCollision();
-    drawGame();
+    moveSnake(); // Двигаем змейку
+    checkCollision(); // Проверка на столкновение
+    drawGame(); // Рисуем игру
 }
 
 // Двигаем змейку
 function moveSnake() {
     const head = Object.assign({}, snake[0]);
 
+    // Определяем новое положение головы змейки в зависимости от направления
     if (direction === 'RIGHT') head.x += gridSize;
     if (direction === 'LEFT') head.x -= gridSize;
     if (direction === 'UP') head.y -= gridSize;
     if (direction === 'DOWN') head.y += gridSize;
 
-    snake.unshift(head);
+    snake.unshift(head); // Добавляем новый элемент в начало массива (голова)
 
     // Проверка на еду
     if (head.x === food.x && head.y === food.y) {
-        score += 1;
-        food = generateFood();
+        score += 1; // Увеличиваем счёт
+        food = generateFood(); // Генерируем новую еду
     } else {
-        snake.pop();
+        snake.pop(); // Убираем последний элемент (хвост)
     }
 }
 
@@ -44,11 +45,13 @@ function moveSnake() {
 function checkCollision() {
     const head = snake[0];
 
+    // Проверка на столкновение с границами поля
     if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
         clearInterval(gameInterval);
         alert("Игра окончена!");
     }
 
+    // Проверка на столкновение с самим собой
     for (let i = 1; i < snake.length; i++) {
         if (head.x === snake[i].x && head.y === snake[i].y) {
             clearInterval(gameInterval);
@@ -59,16 +62,16 @@ function checkCollision() {
 
 // Рисуем игровое поле
 function drawGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
     // Рисуем змейку
     snake.forEach(part => {
-        ctx.fillStyle = 'green';
-        ctx.fillRect(part.x, part.y, gridSize, gridSize);
+        ctx.fillStyle = 'green'; // Цвет змейки
+        ctx.fillRect(part.x, part.y, gridSize, gridSize); // Рисуем сегмент
     });
 
     // Рисуем еду
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = 'red'; // Цвет еды
     ctx.fillRect(food.x, food.y, gridSize, gridSize);
 
     // Обновляем счёт
