@@ -1,0 +1,12 @@
+#restartBtn {
+    display: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #FF9F00;
+    color: red; /* Изменил цвет текста на красный */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
