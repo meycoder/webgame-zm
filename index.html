@@ -11,23 +11,50 @@
             align-items: center;
             height: 100vh;
             flex-direction: column;
+            background: linear-gradient(135deg, #56CCF2, #2F80ED); /* Градиентный фон */
+            color: white;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
         }
         canvas {
-            border: 1px solid black;
+            border: 3px solid #fff; /* Белая рамка для канваса */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для канваса */
         }
         #controls {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
             margin-top: 20px;
         }
         button {
-            padding: 10px;
+            padding: 15px;
             font-size: 18px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        button:hover {
+            transform: scale(1.1); /* Легкое увеличение при наведении */
         }
         #restartBtn {
-            display: none; /* Скрываем кнопку по умолчанию */
+            display: none;
             margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #FF9F00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        #restartBtn:hover {
+            transform: scale(1.1); /* Легкое увеличение при наведении */
+        }
+        #score {
+            font-size: 24px;
+            margin-top: 15px;
         }
     </style>
 </head>
