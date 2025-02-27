@@ -11,7 +11,7 @@ let gameInterval;
 // Функция для инициализации игры
 function initializeGame() {
     snake = [{ x: 50, y: 50 }];
-    food = { x: 100, y: 100 };
+    food = generateFood();
     score = 0;
     direction = 'RIGHT';
     document.getElementById('score').textContent = `Очки: ${score}`;
@@ -79,14 +79,15 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
-    // Рисуем змейку
-    snake.forEach(part => {
-        ctx.fillStyle = 'green'; // Цвет змейки
+    // Рисуем змейку с эффектом тени
+    snake.forEach((part, index) => {
+        const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
+        ctx.fillStyle = `rgba(0, 255, 0, ${alpha})`; // Зеленый с прозрачностью
         ctx.fillRect(part.x, part.y, gridSize, gridSize); // Рисуем сегмент
     });
 
-    // Рисуем еду
-    ctx.fillStyle = 'red'; // Цвет еды
+    // Рисуем еду с эффектом тени
+    ctx.fillStyle = 'rgba(255, 0, 0, 0.7)'; // Ярко-красная еда с небольшой прозрачностью
     ctx.fillRect(food.x, food.y, gridSize, gridSize);
 
     // Обновляем счёт
@@ -121,8 +122,3 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 
 // Инициализация игры при загрузке страницы
 initializeGame();
-
-// Предотвращение зума при многократных кликах
-document.addEventListener('touchstart', function(e) {
-    e.preventDefault();
-}, { passive: false });
