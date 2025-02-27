@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Змейка</title>
+    <style>
+        #gameCanvas {
+            border: 1px solid black;
+        }
+        #score {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div id="game-container">
-        <h1>Змейка 🎮</h1>
-        <canvas id="gameCanvas" width="300" height="300"></canvas>
-        <p id="score">Очки: 0</p>
-    </div>
-    <script src="script.js"></script>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+    <div id="score">Очки: 0</div>
+    <script src="game.js"></script>
 </body>
 </html>
