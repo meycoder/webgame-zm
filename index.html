@@ -2,167 +2,76 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Змейка</title>
     <style>
-        canvas {
-            border: 2px solid #000;
-            background-color: #fafafa;
-        }
-
-        #gameContainer {
+        body {
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            margin-top: 20px;
-        }
-
-        #restartBtn {
-            background-color: #f44336;
+            height: 100vh;
+            flex-direction: column;
+            background: linear-gradient(135deg, #56CCF2, #2F80ED); /* Градиентный фон */
             color: white;
-            border: none;
-            padding: 10px;
-            margin-top: 20px;
-            cursor: pointer;
-            font-size: 16px;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
         }
-
-        #score {
+        canvas {
+            border: 3px solid #fff; /* Белая рамка для канваса */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для канваса */
+        }
+        #controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 15px;
             font-size: 18px;
-            font-weight: bold;
-            margin-top: 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        button:hover {
+            transform: scale(1.1); /* Легкое увеличение при наведении */
+        }
+        #restartBtn {
+            display: none;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #FF9F00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+        #restartBtn:hover {
+            transform: scale(1.1); /* Легкое увеличение при наведении */
+        }
+        #score {
+            font-size: 24px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
-    <div id="gameContainer">
-        <canvas id="gameCanvas" width="300" height="300"></canvas>
-        <div id="score">Очки: 0</div>
-        <button id="restartBtn" style="display:none;">Возродиться</button>
-    </div>
-    <script>
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const restartBtn = document.getElementById('restartBtn');
-        let snake = [{ x: 50, y: 50 }];
-        let food = { x: 100, y: 100 };
-        let score = 0;
-        let direction = 'RIGHT';
-        let gameInterval;
-        let isGameOver = false;
 
-        const gridSize = 10;
-        const canvasSize = 300;
+<canvas id="gameCanvas" width="300" height="300"></canvas>
+<div id="controls">
+    <button id="up">↑</button>
+    <button id="left">←</button>
+    <button id="right">→</button>
+    <button id="down">↓</button>
+</div>
 
-        // Функция для старта игры
-        function startGame() {
-            snake = [{ x: 50, y: 50 }];
-            food = generateFood();
-            score = 0;
-            direction = 'RIGHT';
-            isGameOver = false;
-            gameInterval = setInterval(updateGame, 100);
-            restartBtn.style.display = 'none'; // Скрыть кнопку "Возродиться"
-        }
+<p id="score">Очки: 0</p>
+<button id="restartBtn">Возродиться</button> <!-- кнопка для перезапуска игры -->
 
-        // Функция для обновления игры
-        function updateGame() {
-            moveSnake();
-            checkCollision();
-            drawGame();
-        }
+<script src="game.js"></script>
 
-        // Двигаем змейку
-        function moveSnake() {
-            const head = Object.assign({}, snake[0]);
-
-            if (direction === 'RIGHT') head.x += gridSize;
-            if (direction === 'LEFT') head.x -= gridSize;
-            if (direction === 'UP') head.y -= gridSize;
-            if (direction === 'DOWN') head.y += gridSize;
-
-            snake.unshift(head);
-
-            // Проверка на еду
-            if (head.x === food.x && head.y === food.y) {
-                score += 1;
-                food = generateFood();
-            } else {
-                snake.pop();
-            }
-        }
-
-        // Проверка на столкновения
-        function checkCollision() {
-            const head = snake[0];
-
-            if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
-                endGame();
-            }
-
-            for (let i = 1; i < snake.length; i++) {
-                if (head.x === snake[i].x && head.y === snake[i].y) {
-                    endGame();
-                }
-            }
-        }
-
-        // Завершаем игру
-        function endGame() {
-            clearInterval(gameInterval);
-            isGameOver = true;
-            restartBtn.style.display = 'block'; // Показать кнопку "Возродиться"
-            alert("Игра окончена!");
-        }
-
-        // Рисуем игровое поле
-        function drawGame() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Рисуем змейку
-            snake.forEach(part => {
-                ctx.beginPath();
-                ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, Math.PI * 2);
-                ctx.fillStyle = 'green';
-                ctx.fill();
-                ctx.stroke();
-                ctx.closePath();
-            });
-
-            // Рисуем еду (красное яблоко)
-            ctx.beginPath();
-            ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, Math.PI * 2);
-            ctx.fillStyle = 'red';
-            ctx.fill();
-            ctx.strokeStyle = 'yellow';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
-
-            // Обновляем счёт
-            document.getElementById('score').textContent = `Очки: ${score}`;
-        }
-
-        // Генерация случайной еды
-        function generateFood() {
-            const x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
-            const y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
-            return { x, y };
-        }
-
-        // Обработчик клавиш
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-            if (event.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-            if (event.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-            if (event.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-        });
-
-        // Обработчик кнопки для начала новой игры
-        restartBtn.addEventListener('click', startGame);
-
-        // Запуск игры
-        startGame();
-    </script>
 </body>
 </html>
