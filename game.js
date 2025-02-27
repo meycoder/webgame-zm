@@ -72,7 +72,7 @@ function checkCollision() {
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
     clearInterval(gameInterval);
-    document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку "Возродиться"
+    document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
 // Рисуем игровое поле
