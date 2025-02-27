@@ -85,12 +85,18 @@ function generateFood() {
     return { x, y };
 }
 
-// Обработчик клавиш
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
-    if (event.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-    if (event.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-    if (event.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
+// Обработчики нажатий на кнопки управления
+document.getElementById('up').addEventListener('click', () => {
+    if (direction !== 'DOWN') direction = 'UP';
+});
+document.getElementById('down').addEventListener('click', () => {
+    if (direction !== 'UP') direction = 'DOWN';
+});
+document.getElementById('left').addEventListener('click', () => {
+    if (direction !== 'RIGHT') direction = 'LEFT';
+});
+document.getElementById('right').addEventListener('click', () => {
+    if (direction !== 'LEFT') direction = 'RIGHT';
 });
 
 // Запускаем игру
