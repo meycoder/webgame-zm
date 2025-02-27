@@ -119,22 +119,22 @@
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Рисуем змейку
+            // Рисуем змейку как зеленые округлые части
             snake.forEach(part => {
                 ctx.beginPath();
                 ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, Math.PI * 2);
-                ctx.fillStyle = 'green';
+                ctx.fillStyle = '#00FF00'; // ярко-зеленый
                 ctx.fill();
                 ctx.stroke();
                 ctx.closePath();
             });
 
-            // Рисуем еду (красное яблоко)
+            // Рисуем еду как красное яблоко
             ctx.beginPath();
             ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, Math.PI * 2);
-            ctx.fillStyle = 'red';
+            ctx.fillStyle = '#FF0000'; // красный
             ctx.fill();
-            ctx.strokeStyle = 'yellow';
+            ctx.strokeStyle = '#FFFF00'; // желтая обводка
             ctx.lineWidth = 2;
             ctx.stroke();
             ctx.closePath();
