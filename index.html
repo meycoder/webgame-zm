@@ -1,22 +1,44 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Змейка</title>
     <style>
-        #gameCanvas {
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        canvas {
             border: 1px solid black;
         }
-        #score {
-            font-size: 20px;
-            margin-top: 10px;
+        #controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <canvas id="gameCanvas" width="300" height="300"></canvas>
-    <div id="score">Очки: 0</div>
-    <script src="game.js"></script>
+
+<canvas id="gameCanvas" width="300" height="300"></canvas>
+<div id="controls">
+    <button id="up">↑</button>
+    <button id="left">←</button>
+    <button id="right">→</button>
+    <button id="down">↓</button>
+</div>
+
+<p id="score">Очки: 0</p>
+
+<script src="game.js"></script>
 </body>
 </html>
