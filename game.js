@@ -121,3 +121,8 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 
 // Инициализация игры при загрузке страницы
 initializeGame();
+
+// Предотвращение зума при многократных кликах
+document.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+}, { passive: false });
