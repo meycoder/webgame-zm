@@ -69,22 +69,22 @@ function checkCollision() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Рисуем змейку с эффектом градиента
-    snake.forEach((part, index) => {
+    // Рисуем змейку с голубым градиентом
+    snake.forEach((part) => {
         let gradient = ctx.createRadialGradient(part.x + gridSize / 2, part.y + gridSize / 2, 0, part.x + gridSize / 2, part.y + gridSize / 2, gridSize);
-        gradient.addColorStop(0, 'lightgreen');
-        gradient.addColorStop(1, 'green');
+        gradient.addColorStop(0, 'lightblue');
+        gradient.addColorStop(1, 'deepskyblue');
         ctx.fillStyle = gradient;
         ctx.fillRect(part.x, part.y, gridSize, gridSize);
     });
 
-    // Рисуем еду с красивым эффектом
-    ctx.fillStyle = 'yellow';
+    // Рисуем еду с голубым и белым цветами
+    ctx.fillStyle = 'lightblue';
     ctx.beginPath();
     ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
     ctx.fill();
     ctx.shadowBlur = 10;
-    ctx.shadowColor = 'orange';
+    ctx.shadowColor = 'deepskyblue';
 
     // Обновляем счёт
     document.getElementById('score').textContent = `Очки: ${score}`;
