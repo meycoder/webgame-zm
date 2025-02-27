@@ -119,24 +119,24 @@
         function drawGame() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Рисуем змейку как зеленые округлые части
+            // Рисуем змейку как более красивые закругленные прямоугольники (с добавлением тени)
             snake.forEach(part => {
                 ctx.beginPath();
                 ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, Math.PI * 2);
-                ctx.fillStyle = '#00FF00'; // ярко-зеленый
+                ctx.fillStyle = '#32CD32'; // Лимонно-зеленый цвет для змейки
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 10;
                 ctx.fill();
-                ctx.stroke();
                 ctx.closePath();
             });
 
             // Рисуем еду как красное яблоко
             ctx.beginPath();
             ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, Math.PI * 2);
-            ctx.fillStyle = '#FF0000'; // красный
+            ctx.fillStyle = '#FF6347'; // Томато красный цвет для еды
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+            ctx.shadowBlur = 5;
             ctx.fill();
-            ctx.strokeStyle = '#FFFF00'; // желтая обводка
-            ctx.lineWidth = 2;
-            ctx.stroke();
             ctx.closePath();
 
             // Обновляем счёт
