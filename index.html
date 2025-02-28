@@ -139,7 +139,7 @@
 
         /* Модальное окно */
         .modal {
-            display: none;
+            display: none; /* Скрыто по умолчанию */
             position: fixed;
             z-index: 1;
             left: 0;
@@ -147,12 +147,13 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон */
+            justify-content: center; /* Центрирование по вертикали и горизонтали */
+            align-items: center;
         }
 
         /* Содержимое модального окна */
         .modal-content {
             background: linear-gradient(135deg, #56CCF2, #2F80ED);
-            margin: 15% auto;
             padding: 30px;
             border-radius: 15px;
             width: 80%;
@@ -364,6 +365,28 @@
     // Кнопка для перезапуска игры
     document.getElementById('restartBtn').addEventListener('click', () => {
         initializeGame();
+    });
+
+    // Обработчик для открытия модального окна
+    const profileButton = document.getElementById('profile-button');
+    const profileModal = document.getElementById('profile-modal');
+    const closeModalButton = document.getElementById('close-modal');
+
+    // Открыть модальное окно при клике на кнопку профиля
+    profileButton.addEventListener('click', () => {
+        profileModal.style.display = 'flex'; // Используем flex для правильной центровки
+    });
+
+    // Закрыть модальное окно при клике на кнопку закрытия (X)
+    closeModalButton.addEventListener('click', () => {
+        profileModal.style.display = 'none'; // Скрыть модальное окно
+    });
+
+    // Закрыть модальное окно при клике по фону (снаружи модального окна)
+    window.addEventListener('click', (event) => {
+        if (event.target === profileModal) {
+            profileModal.style.display = 'none'; // Скрыть модальное окно
+        }
     });
 
     initializeGame();
