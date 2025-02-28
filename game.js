@@ -67,7 +67,6 @@ function checkCollision() {
     }
 }
 
-
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
     clearInterval(gameInterval); // Останавливаем игру
