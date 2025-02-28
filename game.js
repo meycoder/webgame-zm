@@ -1,7 +1,8 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const gridSize = 10; // Размер клетки
-const canvasSize = 300;
+const canvasWidth = canvas.width;  // Ширина канваса (350px)
+const canvasHeight = canvas.height; // Высота канваса (300px)
 let snake;
 let food;
 let score;
@@ -56,8 +57,8 @@ function moveSnake() {
 function checkCollision() {
     const head = snake[0];
 
-    // Проверка на столкновение с границами поля
-    if (head.x < 0 || head.x >= canvasSize || head.y < 0 || head.y >= canvasSize) {
+    // Проверка на столкновение с границами поля (с учетом новых размеров канваса)
+    if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
         endGame();
     }
 
@@ -96,8 +97,8 @@ function drawGame() {
 
 // Генерация случайной еды
 function generateFood() {
-    const x = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
-    const y = Math.floor(Math.random() * (canvasSize / gridSize)) * gridSize;
+    const x = Math.floor(Math.random() * (canvasWidth / gridSize)) * gridSize;
+    const y = Math.floor(Math.random() * (canvasHeight / gridSize)) * gridSize;
     return { x, y };
 }
 
