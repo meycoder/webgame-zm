@@ -82,6 +82,32 @@
             font-size: 24px;
             margin-top: 15px;
         }
+
+        /* Стиль для кнопки Telegram */
+        #telegramBtn {
+            margin-top: 30px; /* Отступ сверху */
+            padding: 15px 30px;
+            font-size: 18px;
+            background-color: #0088cc; /* Цвет кнопки Telegram */
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #telegramBtn img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+        }
+
+        #telegramBtn:hover {
+            transform: scale(1.1); /* Легкое увеличение при наведении */
+        }
     </style>
 </head>
 <body>
@@ -98,7 +124,20 @@
 <p id="score">очки: 0</p>
 <button id="restartBtn">Возродиться</button> <!-- кнопка для перезапуска игры -->
 
+<!-- Кнопка Telegram -->
+<button id="telegramBtn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Telegram_2019_logo.svg" alt="Telegram Logo">
+    Перейти в Telegram
+</button>
+
 <script src="game.js"></script>
+
+<script>
+    // Добавляем обработчик на кнопку Telegram
+    document.getElementById('telegramBtn').addEventListener('click', () => {
+        window.open('https://t.me/+elHhXkug-sNlMmZi'); // Замените ссылку на свой Telegram канал
+    });
+</script>
 
 </body>
 </html>
