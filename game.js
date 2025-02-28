@@ -128,4 +128,9 @@ document.getElementById('right').addEventListener('click', () => {
 });
 
 // Обработчик нажатия на кнопку "Возродиться"
-document.getElementById('restartBtn').add
+document.getElementById('restartBtn').addEventListener('click', () => {
+    initializeGame(); // Инициализируем и запускаем игру заново
+});
+
+// Инициализация игры при загрузке страницы
+initializeGame();
