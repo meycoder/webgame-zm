@@ -18,12 +18,11 @@
             flex-direction: column;
             background: linear-gradient(135deg, #56CCF2, #2F80ED);
             color: white;
-            font-family: 'myfont', sans-serif; /* Используем твой шрифт */
+            font-family: 'myfont', sans-serif; /* Применяем шрифт ко всему телу страницы */
             overflow: hidden;
         }
 
         h1 {
-            font-family: 'myfont', sans-serif; /* Шрифт для заголовка */
             font-size: 48px;
             font-weight: bold;
             text-transform: uppercase;
@@ -56,7 +55,6 @@
             border: none;
             cursor: pointer;
             transition: transform 0.15s ease, background 0.2s ease;
-            font-family: 'myfont', sans-serif; /* Для стрелок также используем твой шрифт */
             color: black; /* Сделали стрелочки черными */
         }
 
@@ -119,7 +117,7 @@
 <canvas id="gameCanvas" width="350" height="300"></canvas>
 
 <div id="controls">
-    <!-- Прежние стрелочки (⏶, ⏴, ⏵, ⏷) с черным цветом -->
+    <!-- Стрелочки с твоим шрифтом -->
     <button class="control-btn" id="up">⏶</button>
     <button class="control-btn" id="left">⏴</button>
     <button class="control-btn" id="right">⏵</button>
