@@ -4,7 +4,7 @@ const box = 20;  // Размер клетки
 
 // Загружаем картинку для еды
 const foodImg = new Image();
-foodImg.src = 'images/food.png';  // Путь к изображению еды
+foodImg.src = 'food.png';  // Путь к изображению еды
 
 // Инициализация игры
 let snake = [{ x: 10 * box, y: 10 * box }];
