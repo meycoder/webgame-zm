@@ -60,7 +60,7 @@
         }
 
         .control-btn img {
-            width: 50px;
+            width: 50px; /* Укажи нужный размер иконок */
             height: 50px;
         }
 
@@ -90,117 +90,63 @@
             margin-top: 15px;
         }
 
-        /* Telegram Button */
-        #telegramBtn {
-            margin-top: 30px;
-            padding: 12px 25px;
-            font-size: 18px;
-            background-color: #0088cc;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.1s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        #telegramBtn img {
-            width: 25px;
-            height: 25px;
-            margin-right: 10px;
-        }
-
-        #telegramBtn:hover {
-            transform: scale(1.1);
-        }
-
-        /* Кнопка профиля в правом нижнем углу */
-        .profile-btn {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: none;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-            width: 45px;
-            height: 45px;
-        }
-
-        #profile-icon {
-            width: 30px;
-            height: 30px;
-        }
-
         /* Модальное окно */
         .modal {
-            display: none;
+            display: none; /* Скрыто по умолчанию */
             position: fixed;
             z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон */
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
         }
 
         /* Содержимое модального окна */
         .modal-content {
-            background: linear-gradient(135deg, #56CCF2, #2F80ED);
+            background-color: #2f80ed;
             margin: 15% auto;
-            padding: 30px;
-            border-radius: 15px;
+            padding: 20px;
+            border-radius: 10px;
             width: 80%;
             max-width: 400px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            color: white;
         }
 
         .close-btn {
-            color: white;
+            color: #fff;
             font-size: 28px;
             font-weight: bold;
             position: absolute;
             top: 10px;
             right: 10px;
+            cursor: pointer;
         }
 
         .close-btn:hover,
         .close-btn:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
+            color: black;
         }
 
+        /* Стили для формы */
         #profile-details {
             margin-top: 20px;
         }
 
         #username {
-            padding: 12px;
+            padding: 10px;
             margin: 10px 0;
-            width: 90%;
+            width: 80%;
             font-size: 16px;
-            border-radius: 10px;
-            border: 1px solid #ccc;
         }
 
         #save-username {
-            padding: 12px;
-            background-color: #00FFFF;
+            padding: 10px;
+            background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 10px;
-            transition: transform 0.1s ease;
-        }
-
-        #save-username:hover {
-            transform: scale(1.05);
         }
     </style>
 </head>
@@ -219,11 +165,6 @@
 <p id="score">Score: 0</p>
 <button id="restartBtn">Возродиться</button>
 
-<!-- Кнопка профиля -->
-<button id="profile-button" class="profile-btn">
-    <img src="profile-icon.png" alt="Profile Icon" id="profile-icon">
-</button>
-
 <!-- Модальное окно для профиля -->
 <div id="profile-modal" class="modal">
     <div class="modal-content">
@@ -237,51 +178,7 @@
     </div>
 </div>
 
-<!-- Кнопка Telegram -->
-<button id="telegramBtn">
-    <img src="telegram_icon.png" alt="Telegram Logo">
-    Перейти в Telegram
-</button>
-
-<script>
-// Ваши функции для игры здесь
-// Пример: переменные для игры
-let score = 0;
-let gameCanvas = document.getElementById('gameCanvas');
-let ctx = gameCanvas.getContext('2d');
-
-// Игровая логика
-function drawGame() {
-    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
-    ctx.fillStyle = 'green';
-    ctx.fillRect(50, 50, 10, 10); // Пример рисования змейки
-    ctx.fillStyle = 'white';
-    ctx.font = '20px Arial';
-    ctx.fillText('Score: ' + score, 10, 20);
-}
-
-function startGame() {
-    score = 0;
-    drawGame();
-}
-
-// Пример старта игры
-startGame();
-
-// Механизмы управления игрой
-document.getElementById('up').addEventListener('click', () => {
-    // Логика для движения змейки вверх
-});
-document.getElementById('down').addEventListener('click', () => {
-    // Логика для движения змейки вниз
-});
-document.getElementById('left').addEventListener('click', () => {
-    // Логика для движения змейки влево
-});
-document.getElementById('right').addEventListener('click', () => {
-    // Логика для движения змейки вправо
-});
-</script>
+<script src="game.js"></script>
 
 </body>
 </html>
