@@ -87,8 +87,8 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
-    // Устанавливаем фон только один раз
-    ctx.fillStyle = 'linear-gradient(#56CCF2, #2F80ED)'; // Градиентный фон
+    // Устанавливаем фон канваса
+    ctx.fillStyle = '#2F80ED'; // Цвет фона канваса
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Рисуем змейку с эффектом тени
@@ -128,9 +128,4 @@ document.getElementById('right').addEventListener('click', () => {
 });
 
 // Обработчик нажатия на кнопку "Возродиться"
-document.getElementById('restartBtn').addEventListener('click', () => {
-    initializeGame(); // Инициализируем и запускаем игру заново
-});
-
-// Инициализация игры при загрузке страницы
-initializeGame();
+document.getElementById('restartBtn').add
