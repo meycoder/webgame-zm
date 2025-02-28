@@ -5,11 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
     <style>
-        @font-face {
-            font-family: 'myfont';
-            src: url('myfont.ttf') format('truetype');
-        }
-
         body {
             display: flex;
             justify-content: center;
@@ -18,12 +13,12 @@
             flex-direction: column;
             background: linear-gradient(135deg, #56CCF2, #2F80ED);
             color: white;
-            font-family: 'myfont', sans-serif; /* Используем твой шрифт */
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
 
         h1 {
-            font-family: 'myfont', sans-serif; /* Шрифт для заголовка */
+            font-family: 'Arial', sans-serif;
             font-size: 48px;
             font-weight: bold;
             text-transform: uppercase;
@@ -56,8 +51,6 @@
             border: none;
             cursor: pointer;
             transition: transform 0.15s ease, background 0.2s ease;
-            font-family: 'myfont', sans-serif; /* Для стрелок также используем твой шрифт */
-            color: black; /* Сделали стрелочки черными */
         }
 
         .control-btn:hover {
