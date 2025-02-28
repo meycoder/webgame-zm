@@ -115,6 +115,84 @@
         #telegramBtn:hover {
             transform: scale(1.1);
         }
+
+        /* Кнопка профиля в правом нижнем углу */
+        .profile-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000; /* Чтобы кнопка была поверх всего */
+        }
+
+        #profile-icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none; /* Скрыто по умолчанию */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+        }
+
+        /* Содержимое модального окна */
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* Кнопка для закрытия окна */
+        .close-btn {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Стили для формы */
+        #profile-details {
+            margin-top: 20px;
+        }
+
+        #username {
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            font-size: 16px;
+        }
+
+        #save-username {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -123,7 +201,6 @@
 <canvas id="gameCanvas" width="350" height="300"></canvas>
 
 <div id="controls">
-    <!-- Вместо символов теперь изображения -->
     <button class="control-btn" id="up"><img src="up.png" alt="Up"></button>
     <button class="control-btn" id="left"><img src="left.png" alt="Left"></button>
     <button class="control-btn" id="right"><img src="right.png" alt="Right"></button>
@@ -133,6 +210,25 @@
 <p id="score">Score: 0</p>
 <button id="restartBtn">Возродиться</button>
 
+<!-- Кнопка профиля -->
+<button id="profile-button" class="profile-btn">
+    <img src="profile-icon.png" alt="Profile Icon" id="profile-icon">
+</button>
+
+<!-- Модальное окно для профиля -->
+<div id="profile-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" id="close-modal">&times;</span>
+        <h2>Настройки профиля</h2>
+        <div id="profile-details">
+            <img src="profile-icon.png" alt="Profile Icon" id="profile-image">
+            <label for="username">Введите ваш ник:</label>
+            <input type="text" id="username" name="username" placeholder="Введите ник">
+            <button id="save-username">Сохранить</button>
+        </div>
+    </div>
+</div>
+
 <!-- Кнопка Telegram -->
 <button id="telegramBtn">
     <img src="telegram_icon.png" alt="Telegram Logo">
@@ -140,12 +236,6 @@
 </button>
 
 <script src="game.js"></script>
-
-<script>
-    document.getElementById('telegramBtn').addEventListener('click', () => {
-        window.open('https://t.me/+elHhXkug-sNlMmZi');
-    });
-</script>
 
 </body>
 </html>
