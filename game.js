@@ -48,8 +48,12 @@ function moveSnake() {
         return; // Выход из функции, чтобы не продолжать обновление
     }
 
-    // Убираем лишний хвост, если змейка не съела еду
-    if (!(head.x === food.x && head.y === food.y)) {
+    // Проверка на еду
+    if (head.x === food.x && head.y === food.y) {
+        score += 1; // Увеличиваем счёт
+        food = generateFood(); // Генерируем новую еду
+    } else {
+        // Убираем последний элемент (хвост), если еда не съедена
         snake.pop();
     }
 
@@ -64,7 +68,6 @@ function checkCollision() {
     for (let i = 1; i < snake.length; i++) {
         if (head.x === snake[i].x && head.y === snake[i].y) {
             endGame(); // Столкновение с хвостом
-            return; // Выход из функции, чтобы не продолжать обновление
         }
     }
 }
