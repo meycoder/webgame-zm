@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
     <style>
+        /* Подключаем шрифт */
+        @font-face {
+            font-family: 'myfont'; /* Имя шрифта */
+            src: url('myfont.ttf') format('truetype'); /* Путь к файлу шрифта */
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -16,7 +22,9 @@
             font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
+
         h1 {
+            font-family: 'MyFont', sans-serif; /* Используем свой шрифт */
             font-size: 48px; /* Большой размер шрифта */
             font-weight: bold; /* Жирное начертание */
             text-transform: uppercase; /* Все буквы заглавные */
@@ -24,17 +32,21 @@
             color: #ffffff; /* Белый цвет текста */
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Тень для текста */
             margin-bottom: 20px; /* Отступ снизу */
+            margin-top: -40px; /* Поднимаем текст выше */
         }
+
         canvas {
             border: 3px solid #fff; /* Белая рамка для канваса */
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для канваса */
         }
+
         #controls {
             display: flex;
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
         }
+
         button {
             padding: 15px;
             font-size: 18px;
@@ -44,9 +56,11 @@
             cursor: pointer;
             transition: transform 0.1s ease;
         }
+
         button:hover {
             transform: scale(1.1); /* Легкое увеличение при наведении */
         }
+
         #restartBtn {
             display: none;
             margin-top: 20px;
@@ -58,9 +72,11 @@
             cursor: pointer;
             transition: transform 0.1s ease;
         }
+
         #restartBtn:hover {
             transform: scale(1.1); /* Легкое увеличение при наведении */
         }
+
         #score {
             font-size: 24px;
             margin-top: 15px;
