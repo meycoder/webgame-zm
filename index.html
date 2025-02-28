@@ -4,12 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
+    <!-- Подключаем Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <style>
-        @font-face {
-            font-family: 'myfont';
-            src: url('myfont.ttf') format('truetype');
-        }
-
         body {
             display: flex;
             justify-content: center;
@@ -23,7 +20,7 @@
         }
 
         h1 {
-            font-family: 'MyFont', sans-serif;
+            font-family: 'Arial', sans-serif;
             font-size: 48px;
             font-weight: bold;
             text-transform: uppercase;
@@ -117,10 +114,18 @@
 <canvas id="gameCanvas" width="350" height="300"></canvas>
 
 <div id="controls">
-    <button class="control-btn" id="up">⏶</button>
-    <button class="control-btn" id="left">⏴</button>
-    <button class="control-btn" id="right">⏵</button>
-    <button class="control-btn" id="down">⏷</button>
+    <button class="control-btn" id="up">
+        <span class="material-icons">arrow_upward</span>
+    </button>
+    <button class="control-btn" id="left">
+        <span class="material-icons">arrow_left</span>
+    </button>
+    <button class="control-btn" id="right">
+        <span class="material-icons">arrow_right</span>
+    </button>
+    <button class="control-btn" id="down">
+        <span class="material-icons">arrow_downward</span>
+    </button>
 </div>
 
 <p id="score">Очки: 0</p>
