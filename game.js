@@ -140,3 +140,42 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 
 // Инициализация игры при загрузке страницы
 initializeGame();
+
+// Обработчик для открытия модального окна профиля
+const profileButton = document.getElementById('profile-button');
+const profileModal = document.getElementById('profile-modal');
+const closeModalButton = document.getElementById('close-modal');
+
+// Открытие модального окна при нажатии на кнопку профиля
+profileButton.addEventListener('click', () => {
+    profileModal.style.display = 'block';
+});
+
+// Закрытие модального окна
+closeModalButton.addEventListener('click', () => {
+    profileModal.style.display = 'none';
+});
+
+// Обработчик для сохранения имени пользователя
+const saveUsernameButton = document.getElementById('save-username');
+const usernameInput = document.getElementById('username');
+
+// Сохранение имени пользователя
+saveUsernameButton.addEventListener('click', () => {
+    const username = usernameInput.value.trim();
+    if (username) {
+        localStorage.setItem('username', username); // Сохраняем имя пользователя в localStorage
+        alert(`Привет, ${username}!`);
+        profileModal.style.display = 'none'; // Закрыть окно после сохранения
+    } else {
+        alert('Пожалуйста, введите имя.');
+    }
+});
+
+// Загружаем имя пользователя из localStorage при старте игры
+window.onload = () => {
+    const savedUsername = localStorage.getItem('username');
+    if (savedUsername) {
+        alert(`Добро пожаловать обратно, ${savedUsername}!`);
+    }
+};
