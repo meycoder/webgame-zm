@@ -6,7 +6,8 @@ let snake;
 let food;
 let score;
 let direction;
-let gameInterval;
+let lastRenderTime = 0; // Время последнего обновления
+let gameOver = false; // Флаг окончания игры
 
 // Функция для инициализации игры
 function initializeGame() {
@@ -14,21 +15,28 @@ function initializeGame() {
     food = generateFood();
     score = 0;
     direction = 'RIGHT';
+    gameOver = false;
     document.getElementById('score').textContent = `Очки: ${score}`;
     document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
-    startGame();
-}
-
-// Функция для старта игры
-function startGame() {
-    gameInterval = setInterval(updateGame, 150); // Увеличили интервал обновлений
+    requestAnimationFrame(updateGame); // Запуск игры
 }
 
 // Функция для обновления игры
-function updateGame() {
-    moveSnake(); // Двигаем змейку
-    checkCollision(); // Проверка на столкновение
-    drawGame(); // Рисуем игру
+function updateGame(timestamp) {
+    if (gameOver) return;
+
+    const deltaTime = timestamp - lastRenderTime;
+
+    // Обновляем состояние игры каждые 100 мс
+    if (deltaTime > 100) {
+        moveSnake(); // Двигаем змейку
+        checkCollision(); // Проверка на столкновение
+        drawGame(); // Рисуем игру
+        lastRenderTime = timestamp; // Обновляем время последнего кадра
+    }
+
+    // Запрашиваем следующий кадр
+    requestAnimationFrame(updateGame);
 }
 
 // Двигаем змейку
@@ -71,7 +79,7 @@ function checkCollision() {
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
-    clearInterval(gameInterval); // Останавливаем игру
+    gameOver = true;
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
