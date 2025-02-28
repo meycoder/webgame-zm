@@ -60,7 +60,7 @@
         }
 
         .control-btn img {
-            width: 50px; /* Укажи нужный размер иконок */
+            width: 50px;
             height: 50px;
         }
 
@@ -90,63 +90,117 @@
             margin-top: 15px;
         }
 
+        /* Telegram Button */
+        #telegramBtn {
+            margin-top: 30px;
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #telegramBtn img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+        }
+
+        #telegramBtn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Кнопка профиля в правом нижнем углу */
+        .profile-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+        }
+
+        #profile-icon {
+            width: 30px;
+            height: 30px;
+        }
+
         /* Модальное окно */
         .modal {
-            display: none; /* Скрыто по умолчанию */
+            display: none;
             position: fixed;
             z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            background-color: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон */
         }
 
         /* Содержимое модального окна */
         .modal-content {
-            background-color: #2f80ed;
+            background: linear-gradient(135deg, #56CCF2, #2F80ED);
             margin: 15% auto;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 30px;
+            border-radius: 15px;
             width: 80%;
             max-width: 400px;
             text-align: center;
-            color: white;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .close-btn {
-            color: #fff;
+            color: white;
             font-size: 28px;
             font-weight: bold;
             position: absolute;
             top: 10px;
             right: 10px;
-            cursor: pointer;
         }
 
         .close-btn:hover,
         .close-btn:focus {
-            color: black;
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
         }
 
-        /* Стили для формы */
         #profile-details {
             margin-top: 20px;
         }
 
         #username {
-            padding: 10px;
+            padding: 12px;
             margin: 10px 0;
-            width: 80%;
+            width: 90%;
             font-size: 16px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
         }
 
         #save-username {
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 12px;
+            background-color: #00FFFF;
             color: white;
             border: none;
             cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.1s ease;
+        }
+
+        #save-username:hover {
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -165,6 +219,11 @@
 <p id="score">Score: 0</p>
 <button id="restartBtn">Возродиться</button>
 
+<!-- Кнопка профиля -->
+<button id="profile-button" class="profile-btn">
+    <img src="profile-icon.png" alt="Profile Icon" id="profile-icon">
+</button>
+
 <!-- Модальное окно для профиля -->
 <div id="profile-modal" class="modal">
     <div class="modal-content">
@@ -178,7 +237,145 @@
     </div>
 </div>
 
-<script src="game.js"></script>
+<!-- Кнопка Telegram -->
+<button id="telegramBtn">
+    <img src="telegram_icon.png" alt="Telegram Logo">
+    Перейти в Telegram
+</button>
+
+<script>
+    // Получаем элементы
+    const profileBtn = document.getElementById('profile-button');
+    const profileModal = document.getElementById('profile-modal');
+    const closeModal = document.getElementById('close-modal');
+    const saveUsernameBtn = document.getElementById('save-username');
+    const usernameInput = document.getElementById('username');
+
+    // Открытие модального окна
+    profileBtn.addEventListener('click', () => {
+        profileModal.style.display = 'block';
+    });
+
+    // Закрытие модального окна
+    closeModal.addEventListener('click', () => {
+        profileModal.style.display = 'none';
+    });
+
+    // Закрытие модального окна при клике вне его
+    window.addEventListener('click', (event) => {
+        if (event.target === profileModal) {
+            profileModal.style.display = 'none';
+        }
+    });
+
+    // Сохранение имени пользователя
+    saveUsernameBtn.addEventListener('click', () => {
+        const username = usernameInput.value.trim();
+        if (username) {
+            alert(`Имя пользователя сохранено: ${username}`);
+            profileModal.style.display = 'none'; // Закрыть модальное окно после сохранения
+        } else {
+            alert('Пожалуйста, введите ник!');
+        }
+    });
+
+    // Настройки игры
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const gridSize = 10;
+    let snake;
+    let food;
+    let score;
+    let direction;
+    let gameInterval;
+
+    function initializeGame() {
+        snake = [{ x: 50, y: 50 }];
+        food = generateFood();
+        score = 0;
+        direction = 'RIGHT';
+        document.getElementById('score').textContent = `Очки: ${score}`;
+        document.getElementById('restartBtn').style.display = 'none';
+        startGame();
+    }
+
+    function startGame() {
+        gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
+    }
+
+    function updateGame() {
+        moveSnake(); 
+        checkCollision();
+        drawGame();
+    }
+
+    function moveSnake() {
+        const head = Object.assign({}, snake[0]);
+
+        if (direction === 'RIGHT') head.x += gridSize;
+        if (direction === 'LEFT') head.x -= gridSize;
+        if (direction === 'UP') head.y -= gridSize;
+        if (direction === 'DOWN') head.y += gridSize;
+
+        if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
+            endGame();
+            return;
+        }
+
+        if (head.x === food.x && head.y === food.y) {
+            score += 1;
+            food = generateFood();
+        } else {
+            snake.pop();
+        }
+
+        snake.unshift(head);
+    }
+
+    function checkCollision() {
+        const head = snake[0];
+
+        for (let i = 1; i < snake.length; i++) {
+            if (head.x === snake[i].x && head.y === snake[i].y) {
+                endGame();
+            }
+        }
+    }
+
+    function generateFood() {
+        let foodX = Math.floor(Math.random() * (canvas.width / gridSize)) * gridSize;
+        let foodY = Math.floor(Math.random() * (canvas.height / gridSize)) * gridSize;
+        return { x: foodX, y: foodY };
+    }
+
+    function drawGame() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = '#00FF00';
+        snake.forEach((segment) => {
+            ctx.fillRect(segment.x, segment.y, gridSize, gridSize);
+        });
+
+        ctx.fillStyle = '#FF0000';
+        ctx.fillRect(food.x, food.y, gridSize, gridSize);
+
+        document.getElementById('score').textContent = `Очки: ${score}`;
+    }
+
+    function endGame() {
+        clearInterval(gameInterval);
+        document.getElementById('restartBtn').style.display = 'block';
+    }
+
+    document.getElementById('up').addEventListener('click', () => { if (direction !== 'DOWN') direction = 'UP'; });
+    document.getElementById('left').addEventListener('click', () => { if (direction !== 'RIGHT') direction = 'LEFT'; });
+    document.getElementById('right').addEventListener('click', () => { if (direction !== 'LEFT') direction = 'RIGHT'; });
+    document.getElementById('down').addEventListener('click', () => { if (direction !== 'UP') direction = 'DOWN'; });
+
+    document.getElementById('restartBtn').addEventListener('click', initializeGame);
+
+    initializeGame();
+</script>
 
 </body>
 </html>
