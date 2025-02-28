@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Змейка</title>
+    <title>SnakeGame</title>
     <style>
         body {
             display: flex;
@@ -15,6 +15,15 @@
             color: white;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
+        }
+        h1 {
+            font-size: 48px; /* Большой размер шрифта */
+            font-weight: bold; /* Жирное начертание */
+            text-transform: uppercase; /* Все буквы заглавные */
+            letter-spacing: 5px; /* Расстояние между буквами */
+            color: #ffffff; /* Белый цвет текста */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Тень для текста */
+            margin-bottom: 20px; /* Отступ снизу */
         }
         canvas {
             border: 3px solid #fff; /* Белая рамка для канваса */
@@ -60,6 +69,7 @@
 </head>
 <body>
 
+<h1 id="gameTitle">SnakeGame</h1>
 <canvas id="gameCanvas" width="300" height="300"></canvas>
 <div id="controls">
     <button id="up">↑</button>
