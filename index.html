@@ -41,29 +41,25 @@
         }
 
         #controls {
-            display: grid;
-            grid-template-columns: repeat(3, 60px);
-            gap: 10px;
+            display: flex;
             justify-content: center;
-            align-items: center;
+            gap: 15px;
             margin-top: 20px;
         }
 
         .control-btn {
-            width: 60px;
-            height: 60px;
-            font-size: 22px;
+            padding: 15px 20px;
+            font-size: 24px;
             font-weight: bold;
-            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
             border: none;
-            border-radius: 50%;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
             cursor: pointer;
-            transition: transform 0.1s ease, background 0.2s ease;
+            transition: transform 0.15s ease, background 0.2s ease;
         }
 
         .control-btn:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
             background: rgba(255, 255, 255, 1);
         }
 
@@ -121,10 +117,10 @@
 <canvas id="gameCanvas" width="350" height="300"></canvas>
 
 <div id="controls">
-    <button class="control-btn" id="up">↑</button>
-    <button class="control-btn" id="left">←</button>
-    <button class="control-btn" id="right">→</button>
-    <button class="control-btn" id="down">↓</button>
+    <button class="control-btn" id="up">⏶</button>
+    <button class="control-btn" id="left">⏴</button>
+    <button class="control-btn" id="right">⏵</button>
+    <button class="control-btn" id="down">⏷</button>
 </div>
 
 <p id="score">Очки: 0</p>
