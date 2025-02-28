@@ -27,7 +27,7 @@ function updateGame(timestamp) {
 
     const deltaTime = timestamp - lastRenderTime;
 
-    // Обновляем состояние игры каждые 100 мс
+    // Обновляем состояние игры каждые 100 мс (или 10 кадров в секунду)
     if (deltaTime > 100) {
         moveSnake(); // Двигаем змейку
         checkCollision(); // Проверка на столкновение
@@ -35,7 +35,7 @@ function updateGame(timestamp) {
         lastRenderTime = timestamp; // Обновляем время последнего кадра
     }
 
-    // Запрашиваем следующий кадр
+    // Запрашиваем следующий кадр (для анимации)
     requestAnimationFrame(updateGame);
 }
 
@@ -86,6 +86,10 @@ function endGame() {
 // Рисуем игровое поле
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
+
+    // Устанавливаем фон только один раз
+    ctx.fillStyle = 'linear-gradient(#56CCF2, #2F80ED)'; // Градиентный фон
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Рисуем змейку с эффектом тени
     snake.forEach((part, index) => {
