@@ -1,35 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Змейка</title>
-    <link rel="stylesheet" href="us.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<!-- Декоративные элементы фона -->
-<div id="backgroundElements">
-    <div class="leaf" id="leaf1"></div>
-    <div class="leaf" id="leaf2"></div>
-    <div class="leaf" id="leaf3"></div>
-    <div class="waterEffect"></div> <!-- Эффект воды -->
-</div>
-
-<canvas id="gameCanvas" width="300" height="300"></canvas>
-
-<!-- Контролы игры -->
-<div id="controls">
-    <button id="up">↑</button>
-    <button id="left">←</button>
-    <button id="right">→</button>
-    <button id="down">↓</button>
-</div>
-
-<p id="score">Очки: 0</p>
-<button id="restartBtn">Возродиться</button>
-
-<script src="game.js"></script>
-
+    <div id="gameWrapper">
+        <canvas id="gameCanvas" width="300" height="300"></canvas>
+        <div id="controls">
+            <button id="up">↑</button>
+            <button id="left">←</button>
+            <button id="right">→</button>
+            <button id="down">↓</button>
+        </div>
+        <p id="score">Очки: 0</p>
+        <button id="restartBtn">Возродиться</button>
+    </div>
+    <script src="game.js"></script>
 </body>
 </html>
