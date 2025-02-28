@@ -9,9 +9,8 @@ let score;
 let direction;
 let gameInterval;
 
-// Статичные цвета змейки и еды
-const snakeColor = 'black'; // Черная змейка
-const foodColor = 'rgba(255, 0, 0, 0.7)'; // Красная еда
+// Цвет для еды
+const foodColor = 'white'; // Белая еда
 
 // Функция для инициализации игры
 function initializeGame() {
@@ -86,17 +85,25 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
-    // Рисуем змейку с эффектом тени (используем круги для змейки)
+    // Рисуем змейку с градиентом
     snake.forEach((part, index) => {
         const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
-        ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`; // Черная змейка с прозрачностью
+
+        // Создаем линейный градиент для каждого сегмента змейки
+        const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
+        gradient.addColorStop(0, 'black');  // Начало (черный)
+        gradient.addColorStop(0.5, 'gray'); // Средина (серый)
+        gradient.addColorStop(1, 'white');  // Конец (белый)
+
+        // Применяем градиент
+        ctx.fillStyle = gradient;
         ctx.beginPath();
         ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
         ctx.fill();
     });
 
-    // Рисуем еду в виде круга
-    ctx.fillStyle = foodColor; // Красная еда
+    // Рисуем еду
+    ctx.fillStyle = foodColor; // Белая еда
     ctx.beginPath();
     ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
     ctx.fill();
