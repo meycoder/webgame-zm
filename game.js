@@ -37,28 +37,17 @@ function moveSnake() {
     const head = Object.assign({}, snake[0]);
 
     // Определяем новое положение головы змейки в зависимости от направления
-    if (direction === 'RIGHT' && head.x + gridSize < canvasWidth) {
-        head.x += gridSize; // Двигаем вправо
-    }
-    if (direction === 'LEFT' && head.x - gridSize >= 0) {
-        head.x -= gridSize; // Двигаем влево
-    }
-    if (direction === 'UP' && head.y - gridSize >= 0) {
-        head.y -= gridSize; // Двигаем вверх
-    }
-    if (direction === 'DOWN' && head.y + gridSize < canvasHeight) {
-        head.y += gridSize; // Двигаем вниз
+    if (direction === 'RIGHT') head.x += gridSize;
+    if (direction === 'LEFT') head.x -= gridSize;
+    if (direction === 'UP') head.y -= gridSize;
+    if (direction === 'DOWN') head.y += gridSize;
+
+    // Убираем лишний хвост, если змейка не съела еду
+    if (!(head.x === food.x && head.y === food.y)) {
+        snake.pop();
     }
 
     snake.unshift(head); // Добавляем новый элемент в начало массива (голова)
-
-    // Проверка на еду
-    if (head.x === food.x && head.y === food.y) {
-        score += 1; // Увеличиваем счёт
-        food = generateFood(); // Генерируем новую еду
-    } else {
-        snake.pop(); // Убираем последний элемент (хвост)
-    }
 }
 
 // Проверка на столкновения
