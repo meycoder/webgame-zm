@@ -2,12 +2,9 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const box = 20;  // Размер клетки
 
-// Загружаем изображения
-const snakeImg = new Image();
-snakeImg.src = 'snake.png'; // Путь к изображению змейки
-
+// Загружаем картинку для еды
 const foodImg = new Image();
-foodImg.src = 'food.png';  // Путь к изображению еды
+foodImg.src = 'images/food.png';  // Путь к изображению еды
 
 // Инициализация игры
 let snake = [{ x: 10 * box, y: 10 * box }];
@@ -34,9 +31,34 @@ function drawGame() {
     // Рисуем еду
     ctx.drawImage(foodImg, food.x, food.y, box, box);
 
-    // Рисуем змейку
+    // Рисуем змейку с красивыми градиентами и тенями
     for (let i = 0; i < snake.length; i++) {
-        ctx.drawImage(snakeImg, snake[i].x, snake[i].y, box, box); // Каждую часть змейки рисуем как картинку
+        let part = snake[i];
+
+        // Для головы змейки — добавим градиентный эффект
+        if (i === 0) {
+            let gradient = ctx.createRadialGradient(part.x + box / 2, part.y + box / 2, 10, part.x + box / 2, part.y + box / 2, box / 2);
+            gradient.addColorStop(0, "#32CD32"); // Цвет головы
+            gradient.addColorStop(1, "#228B22"); // Цвет кончика
+
+            ctx.fillStyle = gradient;
+            ctx.shadowColor = "black";  // Тень для головы
+            ctx.shadowBlur = 10; // Размытие тени
+            ctx.beginPath();
+            ctx.arc(part.x + box / 2, part.y + box / 2, box / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.closePath();
+        }
+        // Для тела змейки — обычный стиль
+        else {
+            ctx.fillStyle = "#32CD32"; // Цвет тела змейки
+            ctx.shadowColor = "black"; // Тень
+            ctx.shadowBlur = 5; // Размытие
+            ctx.beginPath();
+            ctx.arc(part.x + box / 2, part.y + box / 2, box / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.closePath();
+        }
     }
 
     // Двигаем змейку
