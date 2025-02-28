@@ -42,6 +42,12 @@ function moveSnake() {
     if (direction === 'UP') head.y -= gridSize;
     if (direction === 'DOWN') head.y += gridSize;
 
+    // Проверка на столкновение с границами канваса после движения головы
+    if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
+        endGame(); // Если выход за пределы канваса, заканчиваем игру
+        return; // Выход из функции, чтобы не продолжать обновление
+    }
+
     // Убираем лишний хвост, если змейка не съела еду
     if (!(head.x === food.x && head.y === food.y)) {
         snake.pop();
@@ -54,15 +60,11 @@ function moveSnake() {
 function checkCollision() {
     const head = snake[0];
 
-    // Проверка на столкновение с границами поля (правой и левой стеной)
-    if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
-        endGame(); // Если выход за пределы канваса, заканчиваем игру
-    }
-
     // Проверка на столкновение с самим собой
     for (let i = 1; i < snake.length; i++) {
         if (head.x === snake[i].x && head.y === snake[i].y) {
             endGame(); // Столкновение с хвостом
+            return; // Выход из функции, чтобы не продолжать обновление
         }
     }
 }
