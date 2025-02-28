@@ -244,44 +244,44 @@
 </button>
 
 <script>
-    // Получаем элементы
-    const profileBtn = document.getElementById('profile-button');
-    const profileModal = document.getElementById('profile-modal');
-    const closeModal = document.getElementById('close-modal');
-    const saveUsernameBtn = document.getElementById('save-username');
-    const usernameInput = document.getElementById('username');
+// Ваши функции для игры здесь
+// Пример: переменные для игры
+let score = 0;
+let gameCanvas = document.getElementById('gameCanvas');
+let ctx = gameCanvas.getContext('2d');
 
-    // Открытие модального окна
-    profileBtn.addEventListener('click', () => {
-        profileModal.style.display = 'block';
-    });
+// Игровая логика
+function drawGame() {
+    ctx.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+    ctx.fillStyle = 'green';
+    ctx.fillRect(50, 50, 10, 10); // Пример рисования змейки
+    ctx.fillStyle = 'white';
+    ctx.font = '20px Arial';
+    ctx.fillText('Score: ' + score, 10, 20);
+}
 
-    // Закрытие модального окна
-    closeModal.addEventListener('click', () => {
-        profileModal.style.display = 'none';
-    });
+function startGame() {
+    score = 0;
+    drawGame();
+}
 
-    // Закрытие модального окна при клике вне его
-    window.addEventListener('click', (event) => {
-        if (event.target === profileModal) {
-            profileModal.style.display = 'none';
-        }
-    });
+// Пример старта игры
+startGame();
 
-    // Сохранение имени пользователя
-    saveUsernameBtn.addEventListener('click', () => {
-        const username = usernameInput.value.trim();
-        if (username) {
-            alert(`Имя пользователя сохранено: ${username}`);
-            // Здесь можно дополнительно сохранять имя в локальном хранилище или отправить на сервер
-            profileModal.style.display = 'none'; // Закрыть модальное окно после сохранения
-        } else {
-            alert('Пожалуйста, введите ник!');
-        }
-    });
+// Механизмы управления игрой
+document.getElementById('up').addEventListener('click', () => {
+    // Логика для движения змейки вверх
+});
+document.getElementById('down').addEventListener('click', () => {
+    // Логика для движения змейки вниз
+});
+document.getElementById('left').addEventListener('click', () => {
+    // Логика для движения змейки влево
+});
+document.getElementById('right').addEventListener('click', () => {
+    // Логика для движения змейки вправо
+});
 </script>
-
-<script src="game.js"></script>
 
 </body>
 </html>
