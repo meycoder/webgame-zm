@@ -15,6 +15,8 @@ body {
 canvas {
     border: 3px solid #fff; /* Белая рамка для канваса */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для канваса */
+    position: relative;
+    z-index: 10;
 }
 
 /* Контролы */
@@ -81,6 +83,7 @@ button:hover {
     right: 0;
     bottom: 0;
     background: rgba(255, 255, 255, 0.2);
+    background-image: linear-gradient(0deg, rgba(0, 0, 255, 0.2), rgba(0, 0, 255, 0.1));
     animation: waveEffect 5s infinite linear;
 }
 
@@ -116,6 +119,12 @@ button:hover {
     animation-delay: 4s;
 }
 
+#leaf3 {
+    top: 150px;
+    left: 60%;
+    animation-delay: 3s;
+}
+
 @keyframes leafFall {
     0% {
         transform: translateY(0) rotate(0deg);
@@ -125,5 +134,27 @@ button:hover {
     }
     100% {
         transform: translateY(600px) rotate(360deg);
+    }
+}
+
+/* Элементы параллакса */
+.parallax {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('https://example.com/background-image.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -2;
+    animation: parallaxEffect 10s infinite linear;
+}
+
+@keyframes parallaxEffect {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
     }
 }
