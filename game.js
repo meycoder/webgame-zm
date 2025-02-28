@@ -21,7 +21,7 @@ function initializeGame() {
 
 // Функция для старта игры
 function startGame() {
-    gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
+    gameInterval = setInterval(updateGame, 150); // Увеличили интервал обновлений
 }
 
 // Функция для обновления игры
