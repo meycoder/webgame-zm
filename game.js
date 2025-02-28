@@ -57,7 +57,7 @@ function moveSnake() {
 function checkCollision() {
     const head = snake[0];
 
-    // Проверка на столкновение с границами поля (с учетом новых размеров канваса)
+    // Проверка на столкновение с границами поля
     if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
         endGame();
     }
@@ -69,6 +69,7 @@ function checkCollision() {
         }
     }
 }
+
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
