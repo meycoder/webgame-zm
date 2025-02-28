@@ -1,25 +1,25 @@
-/* Общие стили */
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    flex-direction: column;
-    background: linear-gradient(135deg, #56CCF2, #2F80ED); /* Градиентный фон */
-    color: white;
-    font-family: 'Arial', sans-serif;
+    background-color: #56CCF2; /* Цвет фона всей страницы */
+    margin: 0;
     overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+#gameWrapper {
     position: relative;
+    text-align: center;
 }
 
 canvas {
     border: 3px solid #fff; /* Белая рамка для канваса */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для канваса */
-    position: relative;
-    z-index: 10; /* Канвас выше всех декоративных элементов */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень канваса */
+    background-color: #2F80ED; /* Устанавливаем цвет фона канваса */
 }
 
-/* Контролы */
 #controls {
     display: flex;
     justify-content: center;
@@ -41,7 +41,6 @@ button:hover {
     transform: scale(1.1); /* Легкое увеличение при наведении */
 }
 
-/* Кнопка перезапуска */
 #restartBtn {
     display: none;
     margin-top: 20px;
@@ -58,82 +57,8 @@ button:hover {
     transform: scale(1.1); /* Легкое увеличение при наведении */
 }
 
-/* Счет */
 #score {
     font-size: 24px;
     margin-top: 15px;
-}
-
-/* Декоративные элементы */
-#backgroundElements {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none; /* Не блокируем клики на канвас */
-    z-index: -1; /* Элементы под канвасом */
-}
-
-/* Эффект воды */
-.waterEffect {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.2);
-    background-image: linear-gradient(0deg, rgba(0, 0, 255, 0.2), rgba(0, 0, 255, 0.1));
-    animation: waveEffect 10s infinite linear;
-}
-
-@keyframes waveEffect {
-    0% {
-        background-position: 0 0;
-    }
-    100% {
-        background-position: 100% 100%;
-    }
-}
-
-/* Листочки */
-.leaf {
-    position: absolute;
-    background-color: #8BC34A;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    opacity: 0.7;
-    animation: leafFall 10s infinite ease-in-out;
-    z-index: -2; /* Листики позади канваса */
-}
-
-#leaf1 {
-    top: 20%;
-    left: 10%;
-    animation-delay: 2s;
-}
-
-#leaf2 {
-    top: 40%;
-    left: 30%;
-    animation-delay: 3s;
-}
-
-#leaf3 {
-    top: 60%;
-    left: 60%;
-    animation-delay: 1s;
-}
-
-@keyframes leafFall {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-    50% {
-        transform: translateY(300px) rotate(180deg);
-    }
-    100% {
-        transform: translateY(600px) rotate(360deg);
-    }
+    color: white;
 }
