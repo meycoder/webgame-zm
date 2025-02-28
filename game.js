@@ -31,7 +31,7 @@ function drawGame() {
     // Рисуем еду
     ctx.drawImage(foodImg, food.x, food.y, box, box);
 
-    // Рисуем змейку с красивыми градиентами и тенями
+    // Рисуем змейку
     for (let i = 0; i < snake.length; i++) {
         let part = snake[i];
 
@@ -49,7 +49,7 @@ function drawGame() {
             ctx.fill();
             ctx.closePath();
         }
-        // Для тела змейки — обычный стиль
+        // Для тела змейки — добавим стилизацию
         else {
             ctx.fillStyle = "#32CD32"; // Цвет тела змейки
             ctx.shadowColor = "black"; // Тень
