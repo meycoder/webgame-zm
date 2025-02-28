@@ -37,10 +37,18 @@ function moveSnake() {
     const head = Object.assign({}, snake[0]);
 
     // Определяем новое положение головы змейки в зависимости от направления
-    if (direction === 'RIGHT') head.x += gridSize;
-    if (direction === 'LEFT') head.x -= gridSize;
-    if (direction === 'UP') head.y -= gridSize;
-    if (direction === 'DOWN') head.y += gridSize;
+    if (direction === 'RIGHT' && head.x + gridSize < canvasWidth) {
+        head.x += gridSize; // Двигаем вправо
+    }
+    if (direction === 'LEFT' && head.x - gridSize >= 0) {
+        head.x -= gridSize; // Двигаем влево
+    }
+    if (direction === 'UP' && head.y - gridSize >= 0) {
+        head.y -= gridSize; // Двигаем вверх
+    }
+    if (direction === 'DOWN' && head.y + gridSize < canvasHeight) {
+        head.y += gridSize; // Двигаем вниз
+    }
 
     snake.unshift(head); // Добавляем новый элемент в начало массива (голова)
 
@@ -59,17 +67,16 @@ function checkCollision() {
 
     // Проверка на столкновение с границами поля
     if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
-        endGame();
+        endGame(); // Столкновение с границей
     }
 
     // Проверка на столкновение с самим собой
     for (let i = 1; i < snake.length; i++) {
         if (head.x === snake[i].x && head.y === snake[i].y) {
-            endGame();
+            endGame(); // Столкновение с хвостом
         }
     }
 }
-
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
