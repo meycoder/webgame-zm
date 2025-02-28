@@ -16,7 +16,7 @@ canvas {
     border: 3px solid #fff; /* Белая рамка для канваса */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Тень для канваса */
     position: relative;
-    z-index: 10;
+    z-index: 10; /* Канвас выше всех декоративных элементов */
 }
 
 /* Контролы */
@@ -71,8 +71,8 @@ button:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    pointer-events: none;
-    z-index: -1;
+    pointer-events: none; /* Не блокируем клики на канвас */
+    z-index: -1; /* Элементы под канвасом */
 }
 
 /* Эффект воды */
