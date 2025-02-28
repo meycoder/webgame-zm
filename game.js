@@ -1,131 +1,93 @@
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const gridSize = 10; // Размер клетки
-const canvasWidth = canvas.width;  // Ширина канваса (350px)
-const canvasHeight = canvas.height; // Высота канваса (300px)
-let snake;
-let food;
-let score;
-let direction;
-let gameInterval;
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
 
-// Статичные цвета змейки и еды
-const snakeColor = 'black'; // Черная змейка
-const foodColor = 'rgba(255, 255, 255, 0.7)'; // Белая еда
+// Загружаем изображения
+const snakeImg = new Image();
+snakeImg.src = "snake.png";
 
-// Функция для инициализации игры
-function initializeGame() {
-    snake = [{ x: 50, y: 50 }];
-    food = generateFood();
-    score = 0;
-    direction = 'RIGHT';
-    document.getElementById('score').textContent = `Очки: ${score}`;
-    document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
-    startGame();
+const foodImg = new Image();
+foodImg.src = "food.png";
+
+// Размер клетки
+const box = 20;
+
+// Змейка
+let snake = [{ x: 10 * box, y: 10 * box }];
+let food = {
+    x: Math.floor(Math.random() * 17 + 1) * box,
+    y: Math.floor(Math.random() * 15 + 3) * box
+};
+
+let direction = "RIGHT";
+let score = 0;
+
+// Слушаем клавиши
+document.addEventListener("keydown", changeDirection);
+
+function changeDirection(event) {
+    if (event.keyCode === 37 && direction !== "RIGHT") direction = "LEFT";
+    else if (event.keyCode === 38 && direction !== "DOWN") direction = "UP";
+    else if (event.keyCode === 39 && direction !== "LEFT") direction = "RIGHT";
+    else if (event.keyCode === 40 && direction !== "UP") direction = "DOWN";
 }
 
-// Функция для старта игры
-function startGame() {
-    gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
-}
+// Отрисовка игры
+function drawGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// Функция для обновления игры
-function updateGame() {
-    moveSnake(); // Двигаем змейку
-    checkCollision(); // Проверка на столкновение
-    drawGame(); // Рисуем игру
-}
+    // Рисуем еду
+    ctx.drawImage(foodImg, food.x, food.y, box, box);
 
-// Двигаем змейку
-function moveSnake() {
-    const head = Object.assign({}, snake[0]);
-
-    // Определяем новое положение головы змейки в зависимости от направления
-    if (direction === 'RIGHT') head.x += gridSize;
-    if (direction === 'LEFT') head.x -= gridSize;
-    if (direction === 'UP') head.y -= gridSize;
-    if (direction === 'DOWN') head.y += gridSize;
-
-    // Проверка на столкновение с границами канваса после движения головы
-    if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
-        endGame(); // Если выход за пределы канваса, заканчиваем игру
-        return; // Выход из функции, чтобы не продолжать обновление
+    // Рисуем змейку
+    for (let i = 0; i < snake.length; i++) {
+        ctx.drawImage(snakeImg, snake[i].x, snake[i].y, box, box);
     }
 
-    // Проверка на еду
-    if (head.x === food.x && head.y === food.y) {
-        score += 1; // Увеличиваем счёт
-        food = generateFood(); // Генерируем новую еду
+    // Двигаем змейку
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
+
+    if (direction === "LEFT") snakeX -= box;
+    if (direction === "UP") snakeY -= box;
+    if (direction === "RIGHT") snakeX += box;
+    if (direction === "DOWN") snakeY += box;
+
+    // Проверяем, съела ли змейка еду
+    if (snakeX === food.x && snakeY === food.y) {
+        score++;
+        food = {
+            x: Math.floor(Math.random() * 17 + 1) * box,
+            y: Math.floor(Math.random() * 15 + 3) * box
+        };
     } else {
-        // Убираем последний элемент (хвост), если еда не съедена
         snake.pop();
     }
 
-    snake.unshift(head); // Добавляем новый элемент в начало массива (голова)
+    // Добавляем новую голову змейки
+    let newHead = { x: snakeX, y: snakeY };
+
+    // Проверяем на столкновение
+    if (collision(newHead, snake)) {
+        clearInterval(game);
+    }
+
+    snake.unshift(newHead);
+
+    // Отображаем счёт
+    ctx.fillStyle = "white";
+    ctx.font = "20px Arial";
+    ctx.fillText("Очки: " + score, 10, 25);
 }
 
-// Проверка на столкновения
-function checkCollision() {
-    const head = snake[0];
-
-    // Проверка на столкновение с самим собой
-    for (let i = 1; i < snake.length; i++) {
-        if (head.x === snake[i].x && head.y === snake[i].y) {
-            endGame(); // Столкновение с хвостом
+// Функция проверки столкновения
+function collision(head, array) {
+    for (let i = 0; i < array.length; i++) {
+        if (head.x === array[i].x && head.y === array[i].y) {
+            return true;
         }
     }
+    return false;
 }
 
-// Завершаем игру и показываем кнопку перезапуска
-function endGame() {
-    clearInterval(gameInterval); // Останавливаем игру
-    document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
-}
-
-// Рисуем игровое поле
-function drawGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
-
-    // Рисуем змейку с эффектом тени
-    snake.forEach((part, index) => {
-        const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
-        ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`; // Черная змейка с прозрачностью
-        ctx.fillRect(part.x, part.y, gridSize, gridSize); // Рисуем сегмент
-    });
-
-    // Рисуем еду с эффектом тени
-    ctx.fillStyle = foodColor; // Белая еда с прозрачностью
-    ctx.fillRect(food.x, food.y, gridSize, gridSize);
-
-    // Обновляем счёт
-    document.getElementById('score').textContent = `Очки: ${score}`;
-}
-
-// Генерация случайной еды
-function generateFood() {
-    const x = Math.floor(Math.random() * (canvasWidth / gridSize)) * gridSize;
-    const y = Math.floor(Math.random() * (canvasHeight / gridSize)) * gridSize;
-    return { x, y };
-}
-
-// Обработчики нажатий на кнопки управления
-document.getElementById('up').addEventListener('click', () => {
-    if (direction !== 'DOWN') direction = 'UP'; // Изменяем направление
-});
-document.getElementById('down').addEventListener('click', () => {
-    if (direction !== 'UP') direction = 'DOWN'; // Изменяем направление
-});
-document.getElementById('left').addEventListener('click', () => {
-    if (direction !== 'RIGHT') direction = 'LEFT'; // Изменяем направление
-});
-document.getElementById('right').addEventListener('click', () => {
-    if (direction !== 'LEFT') direction = 'RIGHT'; // Изменяем направление
-});
-
-// Обработчик нажатия на кнопку "Возродиться"
-document.getElementById('restartBtn').addEventListener('click', () => {
-    initializeGame(); // Инициализируем и запускаем игру заново
-});
-
-// Инициализация игры при загрузке страницы
-initializeGame();
+// Запускаем игру
+let game = setInterval(drawGame, 100);
