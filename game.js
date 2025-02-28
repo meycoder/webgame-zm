@@ -10,7 +10,7 @@ let direction;
 let gameInterval;
 
 // Статичные цвета змейки и еды
-const snakeColor = 'rgba(0, 191, 255, 1)'; // Голубая змейка
+const snakeColor = 'rgba(173, 216, 230, 1)'; // Светло-голубая змейка
 const foodColor = 'rgba(255, 255, 255, 0.7)'; // Белая еда
 
 // Функция для инициализации игры
@@ -89,7 +89,7 @@ function drawGame() {
     // Рисуем змейку с эффектом тени
     snake.forEach((part, index) => {
         const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
-        ctx.fillStyle = `rgba(0, 191, 255, ${alpha})`; // Голубая змейка с прозрачностью
+        ctx.fillStyle = `rgba(173, 216, 230, ${alpha})`; // Светло-голубая змейка с прозрачностью
         ctx.fillRect(part.x, part.y, gridSize, gridSize); // Рисуем сегмент
     });
 
