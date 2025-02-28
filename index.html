@@ -18,12 +18,12 @@
             flex-direction: column;
             background: linear-gradient(135deg, #56CCF2, #2F80ED);
             color: white;
-            font-family: 'Arial', sans-serif; /* Применяем стандартный шрифт для остальной части страницы */
+            font-family: 'Arial', sans-serif;
             overflow: hidden;
         }
 
         h1 {
-            font-family: 'myfont', sans-serif; /* Применяем твой шрифт только на основной надписи */
+            font-family: 'myfont', sans-serif;
             font-size: 48px;
             font-weight: bold;
             text-transform: uppercase;
@@ -48,15 +48,20 @@
         }
 
         .control-btn {
-            padding: 15px 20px;
-            font-size: 30px; /* Увеличиваем размер шрифта для стрелочек */
-            font-weight: bold;
-            border-radius: 10px;
+            padding: 10px;
             background-color: rgba(255, 255, 255, 0.8);
             border: none;
             cursor: pointer;
             transition: transform 0.15s ease, background 0.2s ease;
-            color: black; /* Сделали стрелочки черными */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn img {
+            width: 50px; /* Укажи нужный размер иконок */
+            height: 50px;
         }
 
         .control-btn:hover {
@@ -118,14 +123,14 @@
 <canvas id="gameCanvas" width="350" height="300"></canvas>
 
 <div id="controls">
-    <!-- Стрелочки теперь более совместимы для Android -->
-    <button class="control-btn" id="up">↑</button>
-    <button class="control-btn" id="left">←</button>
-    <button class="control-btn" id="right">→</button>
-    <button class="control-btn" id="down">↓</button>
+    <!-- Вместо символов теперь изображения -->
+    <button class="control-btn" id="up"><img src="up.png" alt="Up"></button>
+    <button class="control-btn" id="left"><img src="left.png" alt="Left"></button>
+    <button class="control-btn" id="right"><img src="right.png" alt="Right"></button>
+    <button class="control-btn" id="down"><img src="down.png" alt="Down"></button>
 </div>
 
-<p id="score">Score: 0</p> <!-- Заменил "Очки" на "Score" -->
+<p id="score">Score: 0</p>
 <button id="restartBtn">Возродиться</button>
 
 <!-- Кнопка Telegram -->
