@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
     <style>
+        @font-face {
+            font-family: 'myfont';
+            src: url('myfont.ttf') format('truetype');
+        }
+
         body {
             display: flex;
             justify-content: center;
@@ -13,12 +18,12 @@
             flex-direction: column;
             background: linear-gradient(135deg, #56CCF2, #2F80ED);
             color: white;
-            font-family: 'Arial', sans-serif;
+            font-family: 'myfont', sans-serif; /* Используем твой шрифт */
             overflow: hidden;
         }
 
         h1 {
-            font-family: 'Arial', sans-serif;
+            font-family: 'myfont', sans-serif; /* Шрифт для заголовка */
             font-size: 48px;
             font-weight: bold;
             text-transform: uppercase;
@@ -51,6 +56,8 @@
             border: none;
             cursor: pointer;
             transition: transform 0.15s ease, background 0.2s ease;
+            font-family: 'myfont', sans-serif; /* Для стрелок также используем твой шрифт */
+            color: black; /* Сделали стрелочки черными */
         }
 
         .control-btn:hover {
@@ -112,11 +119,11 @@
 <canvas id="gameCanvas" width="350" height="300"></canvas>
 
 <div id="controls">
-    <!-- Стрелочки как Unicode символы -->
-    <button class="control-btn" id="up">↑</button>
-    <button class="control-btn" id="left">←</button>
-    <button class="control-btn" id="right">→</button>
-    <button class="control-btn" id="down">↓</button>
+    <!-- Прежние стрелочки (⏶, ⏴, ⏵, ⏷) с черным цветом -->
+    <button class="control-btn" id="up">⏶</button>
+    <button class="control-btn" id="left">⏴</button>
+    <button class="control-btn" id="right">⏵</button>
+    <button class="control-btn" id="down">⏷</button>
 </div>
 
 <p id="score">Очки: 0</p>
