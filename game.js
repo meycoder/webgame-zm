@@ -51,6 +51,7 @@ function moveSnake() {
 }
 
 // Проверка на столкновения
+// Проверка на столкновения
 function checkCollision() {
     const head = snake[0];
 
