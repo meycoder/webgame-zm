@@ -11,7 +11,7 @@ let gameInterval;
 
 // Статичные цвета змейки и еды
 const snakeColor = 'black'; // Черная змейка
-const foodColor = 'rgba(255, 255, 255, 0.7)'; // Белая еда
+const foodColor = 'rgba(255, 0, 0, 0.7)'; // Красная еда
 
 // Функция для инициализации игры
 function initializeGame() {
@@ -86,16 +86,20 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
-    // Рисуем змейку с эффектом тени
+    // Рисуем змейку с эффектом тени (используем круги для змейки)
     snake.forEach((part, index) => {
         const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
         ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`; // Черная змейка с прозрачностью
-        ctx.fillRect(part.x, part.y, gridSize, gridSize); // Рисуем сегмент
+        ctx.beginPath();
+        ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
+        ctx.fill();
     });
 
-    // Рисуем еду с эффектом тени
-    ctx.fillStyle = foodColor; // Белая еда с прозрачностью
-    ctx.fillRect(food.x, food.y, gridSize, gridSize);
+    // Рисуем еду в виде круга
+    ctx.fillStyle = foodColor; // Красная еда
+    ctx.beginPath();
+    ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
+    ctx.fill();
 
     // Обновляем счёт
     document.getElementById('score').textContent = `Очки: ${score}`;
