@@ -6,8 +6,7 @@ let snake;
 let food;
 let score;
 let direction;
-let lastRenderTime = 0; // Время последнего обновления
-let gameOver = false; // Флаг окончания игры
+let gameInterval;
 
 // Функция для инициализации игры
 function initializeGame() {
@@ -15,28 +14,21 @@ function initializeGame() {
     food = generateFood();
     score = 0;
     direction = 'RIGHT';
-    gameOver = false;
     document.getElementById('score').textContent = `Очки: ${score}`;
     document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
-    requestAnimationFrame(updateGame); // Запуск игры
+    startGame();
+}
+
+// Функция для старта игры
+function startGame() {
+    gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
 }
 
 // Функция для обновления игры
-function updateGame(timestamp) {
-    if (gameOver) return;
-
-    const deltaTime = timestamp - lastRenderTime;
-
-    // Обновляем состояние игры каждые 100 мс (или 10 кадров в секунду)
-    if (deltaTime > 100) {
-        moveSnake(); // Двигаем змейку
-        checkCollision(); // Проверка на столкновение
-        drawGame(); // Рисуем игру
-        lastRenderTime = timestamp; // Обновляем время последнего кадра
-    }
-
-    // Запрашиваем следующий кадр (для анимации)
-    requestAnimationFrame(updateGame);
+function updateGame() {
+    moveSnake(); // Двигаем змейку
+    checkCollision(); // Проверка на столкновение
+    drawGame(); // Рисуем игру
 }
 
 // Двигаем змейку
@@ -79,17 +71,13 @@ function checkCollision() {
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
-    gameOver = true;
+    clearInterval(gameInterval); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
 // Рисуем игровое поле
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
-
-    // Устанавливаем фон канваса
-    ctx.fillStyle = '#2F80ED'; // Цвет фона канваса
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Рисуем змейку с эффектом тени
     snake.forEach((part, index) => {
