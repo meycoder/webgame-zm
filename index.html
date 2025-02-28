@@ -8,15 +8,17 @@
 </head>
 <body>
 
-<canvas id="gameCanvas" width="300" height="300"></canvas>
-
-<!-- Декоративные элементы -->
+<!-- Декоративные элементы фона -->
 <div id="backgroundElements">
     <div class="leaf" id="leaf1"></div>
     <div class="leaf" id="leaf2"></div>
-    <div class="waterEffect"></div>
+    <div class="leaf" id="leaf3"></div>
+    <div class="waterEffect"></div> <!-- Эффект воды -->
 </div>
 
+<canvas id="gameCanvas" width="300" height="300"></canvas>
+
+<!-- Контролы игры -->
 <div id="controls">
     <button id="up">↑</button>
     <button id="left">←</button>
@@ -25,7 +27,7 @@
 </div>
 
 <p id="score">Очки: 0</p>
-<button id="restartBtn">Возродиться</button> <!-- кнопка для перезапуска игры -->
+<button id="restartBtn">Возродиться</button>
 
 <script src="game.js"></script>
 
