@@ -21,36 +21,36 @@
             font-family: 'Arial', sans-serif;
             overflow: hidden;
             margin: 0;
-            padding-top: 20px; /* Поднимаем всё выше */
+            padding-top: 40px; /* Сдвигаем всё выше */
         }
 
         h1 {
             font-family: 'myfont', sans-serif;
-            font-size: 55px; /* Увеличенный текст */
+            font-size: 65px; /* Еще больше увеличен текст */
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 5px;
             color: #ffffff;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         canvas {
             border: 4px solid #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            margin-bottom: 10px; /* Чуть меньше отступ */
+            margin-bottom: 10px;
         }
 
         #controls {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 10px;
         }
 
         .control-btn {
-            padding: 12px; /* Увеличенные кнопки */
+            padding: 12px;
             background-color: rgba(255, 255, 255, 0.8);
             border: none;
             cursor: pointer;
@@ -62,8 +62,8 @@
         }
 
         .control-btn img {
-            width: 60px; /* Увеличенные кнопки управления */
-            height: 60px;
+            width: 65px;
+            height: 65px;
         }
 
         .control-btn:hover {
@@ -73,7 +73,7 @@
 
         #restartBtn {
             display: none;
-            margin-top: 15px; /* Подняли выше */
+            margin-top: 20px; /* Поднята выше */
             padding: 14px 30px;
             font-size: 22px;
             background-color: #00FFFF;
@@ -88,17 +88,17 @@
         }
 
         #score {
-            font-size: 26px;
-            margin-top: 10px;
+            font-size: 28px;
+            margin-top: 5px;
         }
 
         #telegramBtn {
             position: fixed;
-            bottom: 20px; /* Подняли выше */
+            bottom: 50px; /* Поднята выше */
             left: 50%;
             transform: translateX(-50%);
-            padding: 14px 30px;
-            font-size: 20px;
+            padding: 10px 20px; /* Уменьшена кнопка */
+            font-size: 18px;
             background-color: #0088cc;
             color: white;
             border: none;
@@ -115,31 +115,30 @@
         }
 
         #telegramBtn img {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
+            width: 22px;
+            height: 22px;
+            margin-right: 8px;
         }
 
         #telegramBtn:hover {
             background: #0077b6;
         }
 
-        /* Медиазапросы для адаптации */
         @media (max-width: 768px) {
             body {
-                padding-top: 10px;
+                padding-top: 20px;
             }
 
             h1 {
-                font-size: 45px;
+                font-size: 55px;
             }
 
             canvas {
-                margin-bottom: 10px;
+                margin-bottom: 8px;
             }
 
             #controls {
-                gap: 15px;
+                gap: 12px;
             }
 
             .control-btn img {
@@ -148,25 +147,25 @@
             }
 
             #restartBtn {
-                margin-top: 10px;
+                margin-top: 15px;
             }
 
             #telegramBtn {
-                bottom: 15px; /* Поднял выше */
+                bottom: 40px; /* Поднята выше */
             }
         }
 
         @media (max-width: 480px) {
             body {
-                padding-top: 5px;
+                padding-top: 10px;
             }
 
             h1 {
-                font-size: 40px;
+                font-size: 50px;
             }
 
             canvas {
-                margin-bottom: 8px;
+                margin-bottom: 5px;
             }
 
             #controls {
@@ -179,11 +178,11 @@
             }
 
             #restartBtn {
-                margin-top: 8px;
+                margin-top: 10px;
             }
 
             #telegramBtn {
-                bottom: 10px;
+                bottom: 30px;
             }
         }
 
