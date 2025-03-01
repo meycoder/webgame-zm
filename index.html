@@ -314,8 +314,13 @@
 
     function endGame() {
         clearInterval(gameInterval);
-        document.getElementById('restartBtn').style.display = 'block';
+        document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку "Возродиться"
     }
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+        document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
+        initializeGame();
+    });
 
     function drawGame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
