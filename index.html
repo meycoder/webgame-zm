@@ -21,6 +21,7 @@
             color: white;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
+            margin: 0;
         }
 
         h1 {
@@ -93,7 +94,8 @@
 
         /* Telegram Button */
         #telegramBtn {
-            margin-top: 30px;
+            position: absolute;
+            bottom: 20px;
             padding: 12px 25px;
             font-size: 18px;
             background-color: #0088cc;
@@ -105,6 +107,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         #telegramBtn img {
@@ -238,12 +242,13 @@
         </div>
     </div>
 </div>
-<a href="https://t.me/+elHhXkug-sNlMmZi" target="_blank" style="text-decoration: none;">
-    <button id="telegramBtn">
-        <img src="telegram_icon.png" alt="Telegram Logo">
-        Перейти в Telegram
-    </button>
-</a>
+
+<!-- Кнопка Telegram -->
+<button id="telegramBtn">
+    <img src="telegram_icon.png" alt="Telegram Logo">
+    Перейти в Telegram
+</button>
+
 <script>
     // Логика игры
     const canvas = document.getElementById('gameCanvas');
@@ -314,13 +319,8 @@
 
     function endGame() {
         clearInterval(gameInterval);
-        document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку "Возродиться"
+        document.getElementById('restartBtn').style.display = 'block';
     }
-
-    document.getElementById('restartBtn').addEventListener('click', () => {
-        document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
-        initializeGame();
-    });
 
     function drawGame() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
