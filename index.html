@@ -142,25 +142,26 @@
 
 
         /* Кнопка профиля в правом нижнем углу */
-        .profile-btn {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            border: none;
-            padding: 8px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 1000;
-            width: 45px;
-            height: 45px;
-        }
+    .profile-btn {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        background-color: transparent; /* Убираем фон кнопки */
+        border: none;
+        padding: 0; /* Убираем паддинг, чтобы иконка не была обвёрнута */
+        border-radius: 50%; /* Если хочешь оставить круглую форму */
+        cursor: pointer;
+        z-index: 1000;
+        width: 50px;  /* Ширина кнопки равна размеру иконки */
+        height: 50px; /* Высота кнопки равна размеру иконки */
+    }
 
-        #profile-icon {
-            width: 30px;
-            height: 30px;
-        }
-
+    #profile-icon {
+        width: 100%; /* Иконка занимает всю ширину кнопки */
+        height: 100%; /* Иконка занимает всю высоту кнопки */
+        object-fit: contain; /* Иконка сохраняет свои пропорции */
+    }
+        
         /* Модальное окно */
         .modal {
             display: none; /* Скрыто по умолчанию */
