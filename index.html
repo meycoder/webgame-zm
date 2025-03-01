@@ -92,10 +92,11 @@
             margin-top: 15px;
         }
 
-        /* Telegram Button */
         #telegramBtn {
-            position: absolute;
+            position: fixed;
             bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
             padding: 12px 25px;
             font-size: 18px;
             background-color: #0088cc;
@@ -103,12 +104,13 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: transform 0.1s ease;
+            transition: background 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            left: 50%;
-            transform: translateX(-50%);
+            z-index: 1000;
+            width: max-content;
+            white-space: nowrap;
         }
 
         #telegramBtn img {
@@ -118,7 +120,7 @@
         }
 
         #telegramBtn:hover {
-            transform: scale(1.1);
+            background: #0077b6;
         }
 
         /* Кнопка профиля в правом нижнем углу */
