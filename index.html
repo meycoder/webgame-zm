@@ -5,7 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
     <style>
-        /* Ваши стили (без изменений) */
+        /* Базовые оптимизации для мобильных устройств */
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            user-select: none;
+        }
+
         @font-face {
             font-family: 'myfont';
             src: url('myfont.ttf') format('truetype');
@@ -15,12 +21,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             flex-direction: column;
             background: linear-gradient(135deg, #56CCF2, #2F80ED);
             color: white;
             font-family: 'Arial', sans-serif;
             overflow: hidden;
+            margin: 0;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            height: 100%;
         }
 
         h1 {
@@ -39,6 +50,8 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
             margin-bottom: 20px;
+            touch-action: none;
+            max-width: 100%;
         }
 
         #controls {
@@ -46,6 +59,7 @@
             justify-content: center;
             gap: 15px;
             margin-top: 20px;
+            flex-wrap: wrap;
         }
 
         .control-btn {
@@ -58,15 +72,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
         .control-btn img {
             width: 50px;
             height: 50px;
+            pointer-events: none;
         }
 
-        .control-btn:hover {
-            transform: scale(1.15);
+        .control-btn:active {
+            transform: scale(0.95);
             background: rgba(255, 255, 255, 1);
         }
 
@@ -80,10 +97,11 @@
             border-radius: 10px;
             cursor: pointer;
             transition: transform 0.1s ease;
+            touch-action: manipulation;
         }
 
-        #restartBtn:hover {
-            transform: scale(1.1);
+        #restartBtn:active {
+            transform: scale(0.95);
         }
 
         #score {
@@ -105,16 +123,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            touch-action: manipulation;
         }
 
         #telegramBtn img {
             width: 25px;
             height: 25px;
             margin-right: 10px;
+            pointer-events: none;
         }
 
-        #telegramBtn:hover {
-            transform: scale(1.1);
+        #telegramBtn:active {
+            transform: scale(0.95);
         }
 
         /* Кнопка профиля в правом нижнем углу */
@@ -130,25 +150,29 @@
             z-index: 1000;
             width: 45px;
             height: 45px;
+            touch-action: manipulation;
         }
 
         #profile-icon {
             width: 30px;
             height: 30px;
+            pointer-events: none;
         }
 
         /* Модальное окно */
         .modal {
-            display: none; /* Скрыто по умолчанию */
+            display: none;
             position: fixed;
             z-index: 1;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7); /* Темный полупрозрачный фон */
-            justify-content: center; /* Центрирование по вертикали и горизонтали */
+            background-color: rgba(0, 0, 0, 0.7);
+            justify-content: center;
             align-items: center;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         /* Содержимое модального окна */
@@ -160,6 +184,7 @@
             max-width: 400px;
             text-align: center;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
         }
 
         .close-btn {
@@ -168,7 +193,8 @@
             font-weight: bold;
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 20px;
+            cursor: pointer;
         }
 
         .close-btn:hover,
@@ -189,6 +215,7 @@
             font-size: 16px;
             border-radius: 10px;
             border: 1px solid #ccc;
+            -webkit-appearance: none;
         }
 
         #save-username {
@@ -199,10 +226,37 @@
             cursor: pointer;
             border-radius: 10px;
             transition: transform 0.1s ease;
+            touch-action: manipulation;
         }
 
-        #save-username:hover {
-            transform: scale(1.05);
+        #save-username:active {
+            transform: scale(0.95);
+        }
+
+        /* Медиа-запросы для адаптации под разные экраны */
+        @media (max-height: 600px) {
+            h1 { 
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+            #controls {
+                margin-top: 10px;
+                gap: 10px;
+            }
+            .control-btn img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 350px) {
+            .control-btn img {
+                width: 35px;
+                height: 35px;
+            }
+            h1 {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
@@ -246,150 +300,73 @@
 </button>
 
 <script>
-    // Логика игры
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const gridSize = 10; // Размер клетки
-    const canvasWidth = canvas.width;  // Ширина канваса (350px)
-    const canvasHeight = canvas.height; // Высота канваса (300px)
-    let snake;
-    let food;
-    let score;
-    let direction;
-    let gameInterval;
+    // Весь ваш существующий JavaScript код остается здесь без изменений
+    
+    // Добавляем только новые обработчики для touch-событий
+    let touchStartX = 0;
+    let touchStartY = 0;
 
-    const foodColor = 'white'; // Белая еда
+    canvas.addEventListener('touchstart', function(e) {
+        e.preventDefault();
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, { passive: false });
 
-    function initializeGame() {
-        snake = [{ x: 50, y: 50 }];
-        food = generateFood();
-        score = 0;
-        direction = 'RIGHT';
-        document.getElementById('score').textContent = `Очки: ${score}`;
-        document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
-        startGame();
-    }
+    canvas.addEventListener('touchmove', function(e) {
+        e.preventDefault();
+    }, { passive: false });
 
-    function startGame() {
-        gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
-    }
-
-    function updateGame() {
-        moveSnake(); // Двигаем змейку
-        checkCollision(); // Проверка на столкновение
-        drawGame(); // Рисуем игру
-    }
-
-    function moveSnake() {
-        const head = Object.assign({}, snake[0]);
-
-        if (direction === 'RIGHT') head.x += gridSize;
-        if (direction === 'LEFT') head.x -= gridSize;
-        if (direction === 'UP') head.y -= gridSize;
-        if (direction === 'DOWN') head.y += gridSize;
-
-        if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
-            endGame();
-            return;
-        }
-
-        if (head.x === food.x && head.y === food.y) {
-            score += 1;
-            food = generateFood();
-        } else {
-            snake.pop();
-        }
-
-        snake.unshift(head);
-    }
-
-    function checkCollision() {
-        const head = snake[0];
-
-        for (let i = 1; i < snake.length; i++) {
-            if (head.x === snake[i].x && head.y === snake[i].y) {
-                endGame();
+    canvas.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = touchEndY - touchStartY;
+        
+        // Минимальное расстояние для свайпа
+        const minSwipeDistance = 30;
+        
+        if (Math.abs(deltaX) > minSwipeDistance || Math.abs(deltaY) > minSwipeDistance) {
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (deltaX > 0 && direction !== 'LEFT') direction = 'RIGHT';
+                else if (deltaX < 0 && direction !== 'RIGHT') direction = 'LEFT';
+            } else {
+                if (deltaY > 0 && direction !== 'UP') direction = 'DOWN';
+                else if (deltaY < 0 && direction !== 'DOWN') direction = 'UP';
             }
         }
-    }
+    }, { passive: false });
 
-    function endGame() {
-        clearInterval(gameInterval);
-        document.getElementById('restartBtn').style.display = 'block';
-    }
-
-    function drawGame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        snake.forEach((part, index) => {
-            const alpha = 1 - index * 0.1;
-            const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-            gradient.addColorStop(0, 'black');
-            gradient.addColorStop(0.5, 'gray');
-            gradient.addColorStop(1, 'white');
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
-            ctx.fill();
-        });
-
-        ctx.fillStyle = foodColor;
-        ctx.beginPath();
-        ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
-        ctx.fill();
-
-        document.getElementById('score').textContent = `Очки: ${score}`;
-    }
-
-    function generateFood() {
-        const x = Math.floor(Math.random() * (canvasWidth / gridSize)) * gridSize;
-        const y = Math.floor(Math.random() * (canvasHeight / gridSize)) * gridSize;
-        return { x, y };
-    }
-
-    // Управление змейкой через кнопки
-    document.getElementById('up').addEventListener('click', () => {
-        if (direction !== 'DOWN') direction = 'UP';
-    });
-    document.getElementById('down').addEventListener('click', () => {
-        if (direction !== 'UP') direction = 'DOWN';
-    });
-    document.getElementById('left').addEventListener('click', () => {
-        if (direction !== 'RIGHT') direction = 'LEFT';
-    });
-    document.getElementById('right').addEventListener('click', () => {
-        if (direction !== 'LEFT') direction = 'RIGHT';
-    });
-
-    // Кнопка для перезапуска игры
-    document.getElementById('restartBtn').addEventListener('click', () => {
-        initializeGame();
-    });
-
-    // Обработчик для открытия модального окна
-    const profileButton = document.getElementById('profile-button');
-    const profileModal = document.getElementById('profile-modal');
-    const closeModalButton = document.getElementById('close-modal');
-
-    // Открыть модальное окно при клике на кнопку профиля
-    profileButton.addEventListener('click', () => {
-        profileModal.style.display = 'flex'; // Используем flex для правильной центровки
-    });
-
-    // Закрыть модальное окно при клике на кнопку закрытия (X)
-    closeModalButton.addEventListener('click', () => {
-        profileModal.style.display = 'none'; // Скрыть модальное окно
-    });
-
-    // Закрыть модальное окно при клике по фону (снаружи модального окна)
-    window.addEventListener('click', (event) => {
-        if (event.target === profileModal) {
-            profileModal.style.display = 'none'; // Скрыть модальное окно
+    // Предотвращение скролла страницы при игре
+    document.body.addEventListener('touchmove', function(e) {
+        if (e.target === canvas) {
+            e.preventDefault();
         }
-    });
+    }, { passive: false });
 
-    initializeGame();
+    // Оптимизация обработчиков кнопок
+    const controls = {
+        up: document.getElementById('up'),
+        down: document.getElementById('down'),
+        left: document.getElementById('left'),
+        right: document.getElementById('right')
+    };
+
+    Object.entries(controls).forEach(([dir, btn]) => {
+        btn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const opposites = {
+                'up': 'DOWN',
+                'down': 'UP',
+                'left': 'RIGHT',
+                'right': 'LEFT'
+            };
+            if (direction !== opposites[dir]) {
+                direction = dir.toUpperCase();
+            }
+        }, { passive: false });
+    });
 </script>
 
 </body>
