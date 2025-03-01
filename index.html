@@ -22,6 +22,7 @@
             font-family: 'Arial', sans-serif;
             overflow: hidden;
             margin: 0;
+            padding: 0;
         }
 
         h1 {
@@ -93,36 +94,99 @@
         }
 
         #telegramBtn {
-        position: fixed;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 12px 25px;
-        font-size: 18px;
-        background-color: #0088cc;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: background 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        width: max-content;
-        white-space: nowrap;
-        text-decoration: none; /* Убирает подчеркивание */
-    }
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 25px;
+            font-size: 18px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            width: max-content;
+            white-space: nowrap;
+            text-decoration: none; /* Убирает подчеркивание */
+        }
 
-    #telegramBtn img {
-        width: 25px;
-        height: 25px;
-        margin-right: 10px;
-    }
+        #telegramBtn img {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+        }
 
-    #telegramBtn:hover {
-        background: #0077b6;
-    }
+        #telegramBtn:hover {
+            background: #0077b6;
+        }
+
+        /* Медиазапросы для адаптации элементов */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 10px; /* Для мобильных устройств (iOS и Android) уменьшаем верхний отступ */
+            }
+
+            h1 {
+                font-size: 40px; /* Уменьшаем размер заголовка для мобильных устройств */
+                margin-bottom: 10px;
+            }
+
+            canvas {
+                margin-bottom: 15px; /* Уменьшаем нижний отступ */
+            }
+
+            #controls {
+                margin-top: 15px;
+            }
+
+            .control-btn {
+                padding: 8px;
+            }
+
+            #restartBtn {
+                margin-top: 20px;
+            }
+
+            #telegramBtn {
+                bottom: 5px; /* Поднимаем кнопку Telegram для мобильных устройств */
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding-top: 5px; /* Для еще меньших экранов уменьшаем верхний отступ */
+            }
+
+            h1 {
+                font-size: 32px; /* Еще больше уменьшаем размер заголовка */
+                margin-bottom: 5px;
+            }
+
+            canvas {
+                margin-bottom: 10px;
+            }
+
+            #controls {
+                gap: 10px; /* Уменьшаем отступы между кнопками управления */
+            }
+
+            .control-btn {
+                padding: 6px;
+            }
+
+            #restartBtn {
+                margin-top: 15px;
+            }
+
+            #telegramBtn {
+                bottom: 0px; /* Еще выше поднимем кнопку Telegram */
+            }
+        }
 
 
         /* Кнопка профиля в правом нижнем углу */
