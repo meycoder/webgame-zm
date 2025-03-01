@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
     <style>
-        /* Ваши стили (без изменений) */
         @font-face {
             font-family: 'myfont';
             src: url('myfont.ttf') format('truetype');
@@ -22,36 +21,36 @@
             font-family: 'Arial', sans-serif;
             overflow: hidden;
             margin: 0;
-            padding: 0;
+            padding-top: 20px; /* Поднимаем всё выше */
         }
 
         h1 {
             font-family: 'myfont', sans-serif;
-            font-size: 48px;
+            font-size: 55px; /* Увеличенный текст */
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 5px;
             color: #ffffff;
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         canvas {
             border: 4px solid #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Чуть меньше отступ */
         }
 
         #controls {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 10px;
         }
 
         .control-btn {
-            padding: 10px;
+            padding: 12px; /* Увеличенные кнопки */
             background-color: rgba(255, 255, 255, 0.8);
             border: none;
             cursor: pointer;
@@ -63,8 +62,8 @@
         }
 
         .control-btn img {
-            width: 50px;
-            height: 50px;
+            width: 60px; /* Увеличенные кнопки управления */
+            height: 60px;
         }
 
         .control-btn:hover {
@@ -74,9 +73,9 @@
 
         #restartBtn {
             display: none;
-            margin-top: 1px;
-            padding: 12px 25px;
-            font-size: 20px;
+            margin-top: 15px; /* Подняли выше */
+            padding: 14px 30px;
+            font-size: 22px;
             background-color: #00FFFF;
             border: none;
             border-radius: 10px;
@@ -89,17 +88,17 @@
         }
 
         #score {
-            font-size: 24px;
-            margin-top: 15px;
+            font-size: 26px;
+            margin-top: 10px;
         }
 
         #telegramBtn {
             position: fixed;
-            bottom: 10px;
+            bottom: 20px; /* Подняли выше */
             left: 50%;
             transform: translateX(-50%);
-            padding: 12px 25px;
-            font-size: 18px;
+            padding: 14px 30px;
+            font-size: 20px;
             background-color: #0088cc;
             color: white;
             border: none;
@@ -112,12 +111,12 @@
             z-index: 1000;
             width: max-content;
             white-space: nowrap;
-            text-decoration: none; /* Убирает подчеркивание */
+            text-decoration: none;
         }
 
         #telegramBtn img {
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             margin-right: 10px;
         }
 
@@ -125,66 +124,66 @@
             background: #0077b6;
         }
 
-        /* Медиазапросы для адаптации элементов */
+        /* Медиазапросы для адаптации */
         @media (max-width: 768px) {
             body {
-                padding-top: 10px; /* Для мобильных устройств (iOS и Android) уменьшаем верхний отступ */
+                padding-top: 10px;
             }
 
             h1 {
-                font-size: 40px; /* Уменьшаем размер заголовка для мобильных устройств */
-                margin-bottom: 10px;
+                font-size: 45px;
             }
 
             canvas {
-                margin-bottom: 15px; /* Уменьшаем нижний отступ */
+                margin-bottom: 10px;
             }
 
             #controls {
-                margin-top: 15px;
+                gap: 15px;
             }
 
-            .control-btn {
-                padding: 8px;
+            .control-btn img {
+                width: 55px;
+                height: 55px;
             }
 
             #restartBtn {
-                margin-top: 20px;
+                margin-top: 10px;
             }
 
             #telegramBtn {
-                bottom: 5px; /* Поднимаем кнопку Telegram для мобильных устройств */
+                bottom: 15px; /* Поднял выше */
             }
         }
 
         @media (max-width: 480px) {
             body {
-                padding-top: 5px; /* Для еще меньших экранов уменьшаем верхний отступ */
+                padding-top: 5px;
             }
 
             h1 {
-                font-size: 32px; /* Еще больше уменьшаем размер заголовка */
-                margin-bottom: 5px;
+                font-size: 40px;
             }
 
             canvas {
-                margin-bottom: 10px;
+                margin-bottom: 8px;
             }
 
             #controls {
-                gap: 10px; /* Уменьшаем отступы между кнопками управления */
+                gap: 10px;
             }
 
-            .control-btn {
-                padding: 6px;
+            .control-btn img {
+                width: 50px;
+                height: 50px;
             }
 
             #restartBtn {
-                margin-top: 15px;
+                margin-top: 8px;
             }
 
             #telegramBtn {
-                bottom: 0px; /* Еще выше поднимем кнопку Telegram */
+                bottom: 10px;
             }
         }
 
