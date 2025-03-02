@@ -74,6 +74,7 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Рисуем змейку
     snake.forEach((part, index) => {
         const alpha = 1 - index * 0.1;
         const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
@@ -87,6 +88,7 @@ function drawGame() {
         ctx.fill();
     });
 
+    // Рисуем еду
     ctx.fillStyle = foodColor;
     ctx.beginPath();
     ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
