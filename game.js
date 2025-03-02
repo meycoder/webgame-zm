@@ -91,9 +91,9 @@ function drawGame() {
 
         // Создаем линейный градиент для каждого сегмента змейки
         const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, '#ADD8E6');  // Светло-голубой (#ADD8E6)
-        gradient.addColorStop(0.5, '#40E0D0'); // Бирюзовый (#40E0D0)
-        gradient.addColorStop(1, '#90EE90');  // Светло-зеленый (#90EE90)
+        gradient.addColorStop(0, 'Aqua');  // Светло-голубой (#ADD8E6)
+        gradient.addColorStop(0.5, 'Aquamarine'); // Бирюзовый (#40E0D0)
+        gradient.addColorStop(1, 'Turquoise');  // Светло-зеленый (#90EE90)
 
         // Применяем градиент
         ctx.fillStyle = gradient;
