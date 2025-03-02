@@ -27,7 +27,9 @@ function startGame() {
 }
 
 function updateGame() {
-    direction = nextDirection; // Теперь меняем направление перед каждым движением
+    if (isValidDirectionChange(nextDirection)) {
+        direction = nextDirection;
+    }
     moveSnake();
     checkCollision();
     drawGame();
@@ -87,26 +89,36 @@ function generateFood() {
     return { x, y };
 }
 
+// Проверяем, можно ли изменить направление
+function isValidDirectionChange(newDirection) {
+    return !(
+        (newDirection === 'UP' && direction === 'DOWN') ||
+        (newDirection === 'DOWN' && direction === 'UP') ||
+        (newDirection === 'LEFT' && direction === 'RIGHT') ||
+        (newDirection === 'RIGHT' && direction === 'LEFT')
+    );
+}
+
 // Обработчик клавиатуры
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowUp' && direction !== 'DOWN') nextDirection = 'UP';
-    if (event.key === 'ArrowDown' && direction !== 'UP') nextDirection = 'DOWN';
-    if (event.key === 'ArrowLeft' && direction !== 'RIGHT') nextDirection = 'LEFT';
-    if (event.key === 'ArrowRight' && direction !== 'LEFT') nextDirection = 'RIGHT';
+    if (event.key === 'ArrowUp' && isValidDirectionChange('UP')) nextDirection = 'UP';
+    if (event.key === 'ArrowDown' && isValidDirectionChange('DOWN')) nextDirection = 'DOWN';
+    if (event.key === 'ArrowLeft' && isValidDirectionChange('LEFT')) nextDirection = 'LEFT';
+    if (event.key === 'ArrowRight' && isValidDirectionChange('RIGHT')) nextDirection = 'RIGHT';
 });
 
 // Обработчики кнопок на экране
 document.getElementById('up').addEventListener('click', () => {
-    if (direction !== 'DOWN') nextDirection = 'UP';
+    if (isValidDirectionChange('UP')) nextDirection = 'UP';
 });
 document.getElementById('down').addEventListener('click', () => {
-    if (direction !== 'UP') nextDirection = 'DOWN';
+    if (isValidDirectionChange('DOWN')) nextDirection = 'DOWN';
 });
 document.getElementById('left').addEventListener('click', () => {
-    if (direction !== 'RIGHT') nextDirection = 'LEFT';
+    if (isValidDirectionChange('LEFT')) nextDirection = 'LEFT';
 });
 document.getElementById('right').addEventListener('click', () => {
-    if (direction !== 'LEFT') nextDirection = 'RIGHT';
+    if (isValidDirectionChange('RIGHT')) nextDirection = 'RIGHT';
 });
 
 document.getElementById('restartBtn').addEventListener('click', () => {
