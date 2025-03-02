@@ -87,21 +87,21 @@ function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
     // Рисуем змейку с новым градиентом
-    snake.forEach((part, index) => {
-        const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
+snake.forEach((part, index) => {
+    const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
 
-        // Создаем линейный градиент с голубыми и зелеными оттенками
-        const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, '#A2DFF7');  // Начало (светло-голубой)
-        gradient.addColorStop(0.5, '#B3E5A6'); // Средина (березовый)
-        gradient.addColorStop(1, '#A3D8B5');  // Конец (зелёный оттенок)
+    // Создаем линейный градиент с голубыми и зелеными оттенками
+    const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
+    gradient.addColorStop(0, '#A2DFF7');  // Светло-голубой (начало)
+    gradient.addColorStop(0.5, '#A7D8B8'); // Березовый (середина)
+    gradient.addColorStop(1, '#81C79A');  // Зеленый (конец)
 
-        // Применяем градиент
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
-        ctx.fill();
-    });
+    // Применяем градиент
+    ctx.fillStyle = gradient;
+    ctx.beginPath();
+    ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
+    ctx.fill();
+});
 
     // Рисуем еду
     ctx.fillStyle = foodColor; // Белая еда
