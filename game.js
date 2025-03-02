@@ -27,22 +27,13 @@ function startGame() {
 }
 
 function updateGame() {
+    direction = nextDirection; // Теперь меняем направление перед каждым движением
     moveSnake();
     checkCollision();
     drawGame();
 }
 
 function moveSnake() {
-    if (
-        (nextDirection === 'LEFT' && direction === 'RIGHT') ||
-        (nextDirection === 'RIGHT' && direction === 'LEFT') ||
-        (nextDirection === 'UP' && direction === 'DOWN') ||
-        (nextDirection === 'DOWN' && direction === 'UP')
-    ) {
-        nextDirection = direction;
-    }
-
-    direction = nextDirection;
     const head = { ...snake[0] };
 
     if (direction === 'RIGHT') head.x += gridSize;
@@ -82,19 +73,11 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     snake.forEach((part, index) => {
-        const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, 'black');
-        gradient.addColorStop(0.5, 'gray');
-        gradient.addColorStop(1, 'white');
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
-        ctx.fill();
+        ctx.fillStyle = 'black';
+        ctx.fillRect(part.x, part.y, gridSize, gridSize);
     });
     ctx.fillStyle = foodColor;
-    ctx.beginPath();
-    ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.fillRect(food.x, food.y, gridSize, gridSize);
     document.getElementById('score').textContent = `Очки: ${score}`;
 }
 
@@ -104,6 +87,7 @@ function generateFood() {
     return { x, y };
 }
 
+// Обработчик клавиатуры
 document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowUp' && direction !== 'DOWN') nextDirection = 'UP';
     if (event.key === 'ArrowDown' && direction !== 'UP') nextDirection = 'DOWN';
@@ -111,17 +95,18 @@ document.addEventListener('keydown', (event) => {
     if (event.key === 'ArrowRight' && direction !== 'LEFT') nextDirection = 'RIGHT';
 });
 
+// Обработчики кнопок на экране
 document.getElementById('up').addEventListener('click', () => {
-    if (direction !== 'DOWN' && nextDirection !== 'DOWN') nextDirection = 'UP';
+    if (direction !== 'DOWN') nextDirection = 'UP';
 });
 document.getElementById('down').addEventListener('click', () => {
-    if (direction !== 'UP' && nextDirection !== 'UP') nextDirection = 'DOWN';
+    if (direction !== 'UP') nextDirection = 'DOWN';
 });
 document.getElementById('left').addEventListener('click', () => {
-    if (direction !== 'RIGHT' && nextDirection !== 'RIGHT') nextDirection = 'LEFT';
+    if (direction !== 'RIGHT') nextDirection = 'LEFT';
 });
 document.getElementById('right').addEventListener('click', () => {
-    if (direction !== 'LEFT' && nextDirection !== 'LEFT') nextDirection = 'RIGHT';
+    if (direction !== 'LEFT') nextDirection = 'RIGHT';
 });
 
 document.getElementById('restartBtn').addEventListener('click', () => {
