@@ -91,9 +91,9 @@ function drawGame() {
 
         // Создаем линейный градиент с названиями цветов
         const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, 'lightblue');  // Светло-голубой (начало)
-        gradient.addColorStop(0.5, 'paleturquoise'); // Березовый (середина)
-        gradient.addColorStop(1, 'mediumseagreen');  // Зеленый (конец)
+        gradient.addColorStop(0, 'Light Blue');  // Светло-голубой (начало)
+        gradient.addColorStop(0.5, 'Turquoise'); // Березовый (середина)
+        gradient.addColorStop(1, 'Light Green');  // Зеленый (конец)
 
         // Применяем градиент
         ctx.fillStyle = gradient;
