@@ -13,6 +13,7 @@ let canChangeDirection = true; // Флаг, чтобы избежать смен
 
 const foodColor = 'white'; // Белая еда
 
+// Инициализация игры
 function initializeGame() {
     snake = [{ x: 50, y: 50 }];
     food = generateFood();
@@ -24,7 +25,7 @@ function initializeGame() {
 }
 
 function startGame() {
-    gameInterval = setInterval(updateGame, 60); // уменьшено до 60 миллисекунд для улучшения отзывчивости
+    gameInterval = setInterval(updateGame, 100); // Интервал обновления
 }
 
 function updateGame() {
@@ -68,11 +69,11 @@ function checkCollision() {
 
 function endGame() {
     clearInterval(gameInterval);
-    document.getElementById('restartBtn').style.display = 'block';
+    document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку для перезапуска
 }
 
 function drawGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистить canvas
 
     // Рисуем змейку
     snake.forEach((part, index) => {
@@ -169,13 +170,5 @@ saveUsernameButton.addEventListener('click', () => {
     }
 });
 
-// Инициализация, если имя уже сохранено
-window.addEventListener('load', () => {
-    const savedUsername = localStorage.getItem('username');
-    if (savedUsername) {
-        // Если имя сохранено, можем приветствовать пользователя
-        alert(`Добро пожаловать, ${savedUsername}!`);
-    }
-});
-
+// Инициализация игры
 initializeGame();
