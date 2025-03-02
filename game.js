@@ -1,104 +1,142 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const gridSize = 10;
-const canvasWidth = canvas.width;
-const canvasHeight = canvas.height;
-let snake, food, score, direction, gameLoop;
+const gridSize = 10; // Размер клетки
+const canvasWidth = canvas.width;  // Ширина канваса
+const canvasHeight = canvas.height; // Высота канваса
+let snake;
+let food;
+let score;
+let direction;
+let gameInterval;
 
-const foodColor = 'white';
+// Цвет для еды
+const foodColor = 'white'; // Белая еда
 
+// Функция для инициализации игры
 function initializeGame() {
     snake = [{ x: 50, y: 50 }];
     food = generateFood();
     score = 0;
     direction = 'RIGHT';
     document.getElementById('score').textContent = `Очки: ${score}`;
-    document.getElementById('restartBtn').style.display = 'none';
-    requestAnimationFrame(updateGame);
+    document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
+    startGame();
 }
 
+// Функция для старта игры
+function startGame() {
+    gameInterval = setInterval(updateGame, 75); // Снижение интервала для плавности
+}
+
+// Функция для обновления игры
 function updateGame() {
-    moveSnake();
-    if (checkCollision()) return;
-    drawGame();
-    setTimeout(() => requestAnimationFrame(updateGame), 60);
+    moveSnake(); // Двигаем змейку
+    checkCollision(); // Проверка на столкновение
+    drawGame(); // Рисуем игру
 }
 
+// Двигаем змейку
 function moveSnake() {
-    const head = { ...snake[0] };
+    const head = Object.assign({}, snake[0]);
+
+    // Определяем новое положение головы змейки в зависимости от направления
     if (direction === 'RIGHT') head.x += gridSize;
     if (direction === 'LEFT') head.x -= gridSize;
     if (direction === 'UP') head.y -= gridSize;
     if (direction === 'DOWN') head.y += gridSize;
 
+    // Проверка на столкновение с границами канваса
     if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
-        endGame();
+        endGame(); // Если выход за пределы канваса, заканчиваем игру
         return;
     }
 
+    // Проверка на еду
     if (head.x === food.x && head.y === food.y) {
-        score++;
-        food = generateFood();
+        score += 1; // Увеличиваем счёт
+        food = generateFood(); // Генерируем новую еду
     } else {
-        snake.pop();
+        snake.pop(); // Убираем последний элемент (хвост), если еда не съедена
     }
 
-    snake.unshift(head);
+    snake.unshift(head); // Добавляем новый элемент в начало массива (голова)
 }
 
+// Проверка на столкновения
 function checkCollision() {
     const head = snake[0];
+
+    // Проверка на столкновение с самим собой
     for (let i = 1; i < snake.length; i++) {
         if (head.x === snake[i].x && head.y === snake[i].y) {
-            endGame();
-            return true;
+            endGame(); // Столкновение с хвостом
         }
     }
-    return false;
 }
 
+// Завершаем игру и показываем кнопку перезапуска
 function endGame() {
-    document.getElementById('restartBtn').style.display = 'block';
+    clearInterval(gameInterval); // Останавливаем игру
+    document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
+// Рисуем игровое поле
 function drawGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
+
+    // Рисуем змейку с обновленным градиентом
     snake.forEach((part, index) => {
+        const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
+
+        // Создаем линейный градиент для каждого сегмента змейки
         const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, 'lightblue');
-        gradient.addColorStop(0.5, 'turquoise');
-        gradient.addColorStop(1, 'lightgreen');
-        
+        gradient.addColorStop(0, '#AEEEEE');  // Начало (светло-голубой)
+        gradient.addColorStop(0.5, '#D9E6E0'); // Средина (березовый)
+        gradient.addColorStop(1, '#A8D7A7');  // Конец (светло-зеленый)
+
+        // Применяем градиент
         ctx.fillStyle = gradient;
         ctx.beginPath();
-        ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
+        ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
         ctx.fill();
     });
-    
-    ctx.fillStyle = foodColor;
+
+    // Рисуем еду
+    ctx.fillStyle = foodColor; // Белая еда
     ctx.beginPath();
-    ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
+    ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
     ctx.fill();
-    
+
+    // Обновляем счёт
     document.getElementById('score').textContent = `Очки: ${score}`;
 }
 
+// Генерация случайной еды
 function generateFood() {
-    return {
-        x: Math.floor(Math.random() * (canvasWidth / gridSize)) * gridSize,
-        y: Math.floor(Math.random() * (canvasHeight / gridSize)) * gridSize
-    };
+    const x = Math.floor(Math.random() * (canvasWidth / gridSize)) * gridSize;
+    const y = Math.floor(Math.random() * (canvasHeight / gridSize)) * gridSize;
+    return { x, y };
 }
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowUp' && direction !== 'DOWN') direction = 'UP';
-    if (e.key === 'ArrowDown' && direction !== 'UP') direction = 'DOWN';
-    if (e.key === 'ArrowLeft' && direction !== 'RIGHT') direction = 'LEFT';
-    if (e.key === 'ArrowRight' && direction !== 'LEFT') direction = 'RIGHT';
+// Обработчики нажатий на кнопки управления
+document.getElementById('up').addEventListener('click', () => {
+    if (direction !== 'DOWN') direction = 'UP'; // Изменяем направление
+});
+document.getElementById('down').addEventListener('click', () => {
+    if (direction !== 'UP') direction = 'DOWN'; // Изменяем направление
+});
+document.getElementById('left').addEventListener('click', () => {
+    if (direction !== 'RIGHT') direction = 'LEFT'; // Изменяем направление
+});
+document.getElementById('right').addEventListener('click', () => {
+    if (direction !== 'LEFT') direction = 'RIGHT'; // Изменяем направление
 });
 
-document.getElementById('restartBtn').addEventListener('click', initializeGame);
-window.onload = initializeGame;
+// Обработчик нажатия на кнопку "Возродиться"
+document.getElementById('restartBtn').addEventListener('click', () => {
+    initializeGame(); // Инициализируем и запускаем игру заново
+});
+
 // Инициализация игры при загрузке страницы
 initializeGame();
 
