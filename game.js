@@ -168,7 +168,6 @@ saveUsernameButton.addEventListener('click', () => {
     const username = usernameInput.value.trim();
     if (username) {
         localStorage.setItem('username', username); // Сохраняем имя пользователя в localStorage
-        alert(`Привет, ${username}!`);
         profileModal.style.display = 'none'; // Закрыть окно после сохранения
     } else {
         alert('Пожалуйста, введите имя.');
