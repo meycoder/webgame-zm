@@ -7,7 +7,7 @@ let snake;
 let food;
 let score;
 let direction;
-let gameRequestID; // для requestAnimationFrame
+let gameInterval;
 
 // Цвет для еды
 const foodColor = 'white'; // Белая еда
@@ -25,7 +25,7 @@ function initializeGame() {
 
 // Функция для старта игры
 function startGame() {
-    gameRequestID = requestAnimationFrame(updateGame); // Используем requestAnimationFrame для плавности
+    gameInterval = setInterval(updateGame, 100); // обновляем каждую сотую секунды
 }
 
 // Функция для обновления игры
@@ -33,7 +33,6 @@ function updateGame() {
     moveSnake(); // Двигаем змейку
     checkCollision(); // Проверка на столкновение
     drawGame(); // Рисуем игру
-    gameRequestID = requestAnimationFrame(updateGame); // Запрашиваем следующий кадр
 }
 
 // Двигаем змейку
@@ -49,7 +48,7 @@ function moveSnake() {
     // Проверка на столкновение с границами канваса после движения головы
     if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
         endGame(); // Если выход за пределы канваса, заканчиваем игру
-        return;
+        return; // Выход из функции, чтобы не продолжать обновление
     }
 
     // Проверка на еду
@@ -78,7 +77,7 @@ function checkCollision() {
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
-    cancelAnimationFrame(gameRequestID); // Останавливаем игру
+    clearInterval(gameInterval); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
@@ -87,22 +86,21 @@ function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
     // Рисуем змейку с новым градиентом
-snake.forEach((part, index) => {
-    const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
+    snake.forEach((part, index) => {
+        const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
 
-    // Создаем линейный градиент с названиями цветов
-    const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-    gradient.addColorStop(0, 'lightblue');  // Светло-голубой (начало)
-    gradient.addColorStop(0.5, 'paleturquoise'); // Березовый (середина)
-    gradient.addColorStop(1, 'mediumseagreen');  // Зеленый (конец)
+        // Создаем линейный градиент с названиями цветов
+        const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
+        gradient.addColorStop(0, 'lightblue');  // Светло-голубой (начало)
+        gradient.addColorStop(0.5, 'paleturquoise'); // Березовый (середина)
+        gradient.addColorStop(1, 'mediumseagreen');  // Зеленый (конец)
 
-    // Применяем градиент
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
-    ctx.fill();
-});
-
+        // Применяем градиент
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
+        ctx.fill();
+    });
 
     // Рисуем еду
     ctx.fillStyle = foodColor; // Белая еда
