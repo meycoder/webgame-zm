@@ -7,7 +7,6 @@ let snake;
 let food;
 let score;
 let direction;
-let gameInterval;
 let canChangeDirection = true; // Флаг, чтобы избежать смены направления сразу после предыдущего
 
 const foodColor = 'white'; // Белая еда
@@ -24,13 +23,14 @@ function initializeGame() {
 }
 
 function startGame() {
-    gameInterval = setInterval(updateGame, 100); // Интервал обновления (ускорено для лучшего отклика)
+    requestAnimationFrame(updateGame); // Используем requestAnimationFrame для начала игры
 }
 
 function updateGame() {
     moveSnake(); // Двигаем змейку
     checkCollision(); // Проверка на столкновение
     drawGame(); // Рисуем игру
+    requestAnimationFrame(updateGame); // Перезапуск кадра игры
 }
 
 function moveSnake() {
@@ -71,7 +71,7 @@ function checkCollision() {
 }
 
 function endGame() {
-    clearInterval(gameInterval); // Останавливаем игру
+    cancelAnimationFrame(updateGame); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку для перезапуска
 }
 
