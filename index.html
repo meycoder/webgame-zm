@@ -347,8 +347,8 @@
         snake.forEach((part, index) => {
             const alpha = 1 - index * 0.1;
             const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-            gradient.addColorStop(0, 'black');
-            gradient.addColorStop(0.5, 'gray');
+            gradient.addColorStop(0, 'Aqua');
+            gradient.addColorStop(0.5, 'Aquamarine');
             gradient.addColorStop(1, 'white');
 
             ctx.fillStyle = gradient;
