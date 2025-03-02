@@ -1,6 +1,6 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const gridSize = 10; // Размер клетки
+const gridSize = 6; // Размер клетки
 const canvasWidth = canvas.width;  // Ширина канваса (350px)
 const canvasHeight = canvas.height; // Высота канваса (300px)
 let snake;
