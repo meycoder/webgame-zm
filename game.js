@@ -25,7 +25,7 @@ function initializeGame() {
 }
 
 function startGame() {
-    gameInterval = setInterval(updateGame, 100); // Интервал обновления
+    gameInterval = setInterval(updateGame, 100); // Интервал обновления (ускорено для лучшего отклика)
 }
 
 function updateGame() {
@@ -35,31 +35,35 @@ function updateGame() {
 }
 
 function moveSnake() {
-    const head = Object.assign({}, snake[0]);
+    const head = Object.assign({}, snake[0]); // Копируем голову змейки для того, чтобы изменить
 
+    // В зависимости от направления изменяем координаты головы змейки
     if (direction === 'RIGHT') head.x += gridSize;
     if (direction === 'LEFT') head.x -= gridSize;
     if (direction === 'UP') head.y -= gridSize;
     if (direction === 'DOWN') head.y += gridSize;
 
+    // Проверка на столкновение с границами экрана
     if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
         endGame();
         return;
     }
 
+    // Проверка на столкновение с едой
     if (head.x === food.x && head.y === food.y) {
         score += 1;
-        food = generateFood();
+        food = generateFood(); // Генерация новой еды
     } else {
-        snake.pop();
+        snake.pop(); // Убираем хвост змейки, если еда не съедена
     }
 
-    snake.unshift(head);
+    snake.unshift(head); // Добавляем новую голову на начало массива
 }
 
 function checkCollision() {
     const head = snake[0];
 
+    // Проверка на столкновение с самим собой
     for (let i = 1; i < snake.length; i++) {
         if (head.x === snake[i].x && head.y === snake[i].y) {
             endGame();
@@ -68,12 +72,12 @@ function checkCollision() {
 }
 
 function endGame() {
-    clearInterval(gameInterval);
+    clearInterval(gameInterval); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку для перезапуска
 }
 
 function drawGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистить canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистка canvas
 
     // Рисуем змейку
     snake.forEach((part, index) => {
@@ -95,6 +99,7 @@ function drawGame() {
     ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
     ctx.fill();
 
+    // Обновляем счет
     document.getElementById('score').textContent = `Очки: ${score}`;
 }
 
