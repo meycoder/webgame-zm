@@ -1,13 +1,13 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 const gridSize = 10; // Размер клетки
-const canvasWidth = canvas.width;  // Ширина канваса
-const canvasHeight = canvas.height; // Высота канваса
+const canvasWidth = canvas.width;  // Ширина канваса (350px)
+const canvasHeight = canvas.height; // Высота канваса (300px)
 let snake;
 let food;
 let score;
 let direction;
-let gameInterval;
+let gameRequestID; // для requestAnimationFrame
 
 // Цвет для еды
 const foodColor = 'white'; // Белая еда
@@ -25,7 +25,7 @@ function initializeGame() {
 
 // Функция для старта игры
 function startGame() {
-    gameInterval = setInterval(updateGame, 75); // Снижение интервала для плавности
+    gameRequestID = requestAnimationFrame(updateGame); // Используем requestAnimationFrame для плавности
 }
 
 // Функция для обновления игры
@@ -33,6 +33,7 @@ function updateGame() {
     moveSnake(); // Двигаем змейку
     checkCollision(); // Проверка на столкновение
     drawGame(); // Рисуем игру
+    gameRequestID = requestAnimationFrame(updateGame); // Запрашиваем следующий кадр
 }
 
 // Двигаем змейку
@@ -45,7 +46,7 @@ function moveSnake() {
     if (direction === 'UP') head.y -= gridSize;
     if (direction === 'DOWN') head.y += gridSize;
 
-    // Проверка на столкновение с границами канваса
+    // Проверка на столкновение с границами канваса после движения головы
     if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
         endGame(); // Если выход за пределы канваса, заканчиваем игру
         return;
@@ -56,7 +57,8 @@ function moveSnake() {
         score += 1; // Увеличиваем счёт
         food = generateFood(); // Генерируем новую еду
     } else {
-        snake.pop(); // Убираем последний элемент (хвост), если еда не съедена
+        // Убираем последний элемент (хвост), если еда не съедена
+        snake.pop();
     }
 
     snake.unshift(head); // Добавляем новый элемент в начало массива (голова)
@@ -76,7 +78,7 @@ function checkCollision() {
 
 // Завершаем игру и показываем кнопку перезапуска
 function endGame() {
-    clearInterval(gameInterval); // Останавливаем игру
+    cancelAnimationFrame(gameRequestID); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку
 }
 
@@ -84,15 +86,15 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
-    // Рисуем змейку с обновленным градиентом
+    // Рисуем змейку с новым градиентом
     snake.forEach((part, index) => {
         const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
 
-        // Создаем линейный градиент для каждого сегмента змейки
+        // Создаем линейный градиент с голубыми и зелеными оттенками
         const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, '#AEEEEE');  // Начало (светло-голубой)
-        gradient.addColorStop(0.5, '#D9E6E0'); // Средина (березовый)
-        gradient.addColorStop(1, '#A8D7A7');  // Конец (светло-зеленый)
+        gradient.addColorStop(0, '#A2DFF7');  // Начало (светло-голубой)
+        gradient.addColorStop(0.5, '#B3E5A6'); // Средина (березовый)
+        gradient.addColorStop(1, '#A3D8B5');  // Конец (зелёный оттенок)
 
         // Применяем градиент
         ctx.fillStyle = gradient;
@@ -139,6 +141,7 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 
 // Инициализация игры при загрузке страницы
 initializeGame();
+
 
 // Обработчик для открытия модального окна профиля
 const profileButton = document.getElementById('profile-button');
