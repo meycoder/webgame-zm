@@ -85,15 +85,15 @@ function endGame() {
 function drawGame() {
     ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаем поле перед рисованием
 
-        // Рисуем змейку с новым градиентом
+    // Рисуем змейку с градиентом
     snake.forEach((part, index) => {
         const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
 
         // Создаем линейный градиент для каждого сегмента змейки
         const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-        gradient.addColorStop(0, 'Aqua');  // Светло-голубой (#ADD8E6)
-        gradient.addColorStop(0.5, 'Aquamarine'); // Бирюзовый (#40E0D0)
-        gradient.addColorStop(1, 'Turquoise');  // Светло-зеленый (#90EE90)
+        gradient.addColorStop(0, 'black');  // Начало (черный)
+        gradient.addColorStop(0.5, 'gray'); // Средина (серый)
+        gradient.addColorStop(1, 'white');  // Конец (белый)
 
         // Применяем градиент
         ctx.fillStyle = gradient;
@@ -101,7 +101,6 @@ function drawGame() {
         ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
         ctx.fill();
     });
-
 
     // Рисуем еду
     ctx.fillStyle = foodColor; // Белая еда
@@ -141,7 +140,6 @@ document.getElementById('restartBtn').addEventListener('click', () => {
 
 // Инициализация игры при загрузке страницы
 initializeGame();
-
 
 // Обработчик для открытия модального окна профиля
 const profileButton = document.getElementById('profile-button');
