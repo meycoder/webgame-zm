@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SnakeGame</title>
     <style>
+        /* Ваши стили остаются такими же */
         @font-face {
             font-family: 'myfont';
             src: url('myfont.ttf') format('truetype');
@@ -92,25 +93,24 @@
             margin-top: 10px;
         }
 
-                        #telegramBtn {
-        position: fixed;
-        bottom: 5px; /* Опустил чуть ниже */
-        left: 5px; /* Чуть левее */
-        padding: 8px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
+        #telegramBtn {
+            position: fixed;
+            bottom: 5px; /* Опустил чуть ниже */
+            left: 5px; /* Чуть левее */
+            padding: 8px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
 
-    #telegramBtn img {
-        width: 50px;
-        height: 50px;
-    }
-
+        #telegramBtn img {
+            width: 50px;
+            height: 50px;
+        }
 
         @media screen and (max-width: 768px) {
             body {
@@ -140,28 +140,27 @@
             }
         }
 
-
         /* Кнопка профиля в правом нижнем углу */
-    .profile-btn {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        background-color: transparent; /* Убираем фон кнопки */
-        border: none;
-        padding: 0; /* Убираем паддинг, чтобы иконка не была обвёрнута */
-        border-radius: 50%; /* Если хочешь оставить круглую форму */
-        cursor: pointer;
-        z-index: 1000;
-        width: 50px;  /* Ширина кнопки равна размеру иконки */
-        height: 50px; /* Высота кнопки равна размеру иконки */
-    }
+        .profile-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: transparent; /* Убираем фон кнопки */
+            border: none;
+            padding: 0; /* Убираем паддинг, чтобы иконка не была обвёрнута */
+            border-radius: 50%; /* Если хочешь оставить круглую форму */
+            cursor: pointer;
+            z-index: 1000;
+            width: 50px;  /* Ширина кнопки равна размеру иконки */
+            height: 50px; /* Высота кнопки равна размеру иконки */
+        }
 
-    #profile-icon {
-        width: 100%; /* Иконка занимает всю ширину кнопки */
-        height: 100%; /* Иконка занимает всю высоту кнопки */
-        object-fit: contain; /* Иконка сохраняет свои пропорции */
-    }
-        
+        #profile-icon {
+            width: 100%; /* Иконка занимает всю ширину кнопки */
+            height: 100%; /* Иконка занимает всю высоту кнопки */
+            object-fit: contain; /* Иконка сохраняет свои пропорции */
+        }
+
         /* Модальное окно */
         .modal {
             display: none; /* Скрыто по умолчанию */
@@ -264,161 +263,11 @@
     </div>
 </div>
 
-    <a id="telegramBtn" href="https://t.me/+elHhXkug-sNlMmZi" target="_blank">
-        <img src="telegram_icon.png" alt="Telegram">
-    </a>
+<a id="telegramBtn" href="https://t.me/+elHhXkug-sNlMmZi" target="_blank">
+    <img src="telegram_icon.png" alt="Telegram">
+</a>
 
-<script>
-    // Логика игры
-    const canvas = document.getElementById('gameCanvas');
-    const ctx = canvas.getContext('2d');
-    const gridSize = 10; // Размер клетки
-    const canvasWidth = canvas.width;  // Ширина канваса (350px)
-    const canvasHeight = canvas.height; // Высота канваса (300px)
-    let snake;
-    let food;
-    let score;
-    let direction;
-    let gameInterval;
-    let canChangeDirection = true; // Флаг, чтобы избежать смены направления сразу после предыдущего
-
-    const foodColor = 'white'; // Белая еда
-
-    function initializeGame() {
-        snake = [{ x: 50, y: 50 }];
-        food = generateFood();
-        score = 0;
-        direction = 'RIGHT';
-        document.getElementById('score').textContent = `Очки: ${score}`;
-        document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
-        startGame();
-    }
-
-    function startGame() {
-        gameInterval = setInterval(updateGame, 60); // уменьшено до 60 миллисекунд для улучшения отзывчивости
-    }
-
-    function updateGame() {
-        moveSnake(); // Двигаем змейку
-        checkCollision(); // Проверка на столкновение
-        drawGame(); // Рисуем игру
-    }
-
-    function moveSnake() {
-        const head = Object.assign({}, snake[0]);
-
-        if (direction === 'RIGHT') head.x += gridSize;
-        if (direction === 'LEFT') head.x -= gridSize;
-        if (direction === 'UP') head.y -= gridSize;
-        if (direction === 'DOWN') head.y += gridSize;
-
-        if (head.x < 0 || head.x >= canvasWidth || head.y < 0 || head.y >= canvasHeight) {
-            endGame();
-            return;
-        }
-
-        if (head.x === food.x && head.y === food.y) {
-            score += 1;
-            food = generateFood();
-        } else {
-            snake.pop();
-        }
-
-        snake.unshift(head);
-    }
-
-    function checkCollision() {
-        const head = snake[0];
-
-        for (let i = 1; i < snake.length; i++) {
-            if (head.x === snake[i].x && head.y === snake[i].y) {
-                endGame();
-            }
-        }
-    }
-
-    function endGame() {
-        clearInterval(gameInterval);
-        document.getElementById('restartBtn').style.display = 'block';
-    }
-
-    function drawGame() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        snake.forEach((part, index) => {
-            const alpha = 1 - index * 0.1;
-            const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-            gradient.addColorStop(0, 'DodgerBlue');
-            gradient.addColorStop(0.5, 'Aqua');
-            gradient.addColorStop(1, 'Turquoise');
-
-            ctx.fillStyle = gradient;
-            ctx.beginPath();
-            ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
-            ctx.fill();
-        });
-
-        ctx.fillStyle = foodColor;
-        ctx.beginPath();
-        ctx.arc(food.x + gridSize / 2, food.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI);
-        ctx.fill();
-
-        document.getElementById('score').textContent = `Очки: ${score}`;
-    }
-
-    function generateFood() {
-        const x = Math.floor(Math.random() * (canvasWidth / gridSize)) * gridSize;
-        const y = Math.floor(Math.random() * (canvasHeight / gridSize)) * gridSize;
-        return { x, y };
-    }
-
-    // Управление змейкой через кнопки
-    function changeDirection(newDirection) {
-        // Проверка, что новое направление не противоположное текущему
-        if (canChangeDirection && ((newDirection === 'UP' && direction !== 'DOWN') ||
-            (newDirection === 'DOWN' && direction !== 'UP') ||
-            (newDirection === 'LEFT' && direction !== 'RIGHT') ||
-            (newDirection === 'RIGHT' && direction !== 'LEFT'))) {
-            direction = newDirection;
-            canChangeDirection = false;  // Блокируем изменение направления до следующего обновления
-        }
-    }
-
-    document.getElementById('up').addEventListener('click', () => changeDirection('UP'));
-    document.getElementById('down').addEventListener('click', () => changeDirection('DOWN'));
-    document.getElementById('left').addEventListener('click', () => changeDirection('LEFT'));
-    document.getElementById('right').addEventListener('click', () => changeDirection('RIGHT'));
-
-    // Кнопка для перезапуска игры
-    document.getElementById('restartBtn').addEventListener('click', () => {
-        initializeGame();
-    });
-
-    // Обработчик для открытия модального окна
-    const profileButton = document.getElementById('profile-button');
-    const profileModal = document.getElementById('profile-modal');
-    const closeModalButton = document.getElementById('close-modal');
-
-    // Открыть модальное окно при клике на кнопку профиля
-    profileButton.addEventListener('click', () => {
-        profileModal.style.display = 'flex'; // Используем flex для правильной центровки
-    });
-
-    // Закрыть модальное окно при клике на кнопку закрытия (X)
-    closeModalButton.addEventListener('click', () => {
-        profileModal.style.display = 'none'; // Скрыть модальное окно
-    });
-
-    // Закрыть модальное окно при клике по фону (снаружи модального окна)
-    window.addEventListener('click', (event) => {
-        if (event.target === profileModal) {
-            profileModal.style.display = 'none'; // Скрыть модальное окно
-        }
-    });
-
-    initializeGame();
-</script>
-
-
+<!-- Подключение внешнего JavaScript файла -->
+<script src="game.js"></script>
 </body>
 </html>
