@@ -33,6 +33,15 @@ function updateGame() {
 }
 
 function moveSnake() {
+    if (
+        (nextDirection === 'LEFT' && direction === 'RIGHT') ||
+        (nextDirection === 'RIGHT' && direction === 'LEFT') ||
+        (nextDirection === 'UP' && direction === 'DOWN') ||
+        (nextDirection === 'DOWN' && direction === 'UP')
+    ) {
+        nextDirection = direction;
+    }
+
     direction = nextDirection;
     const head = { ...snake[0] };
 
@@ -95,17 +104,24 @@ function generateFood() {
     return { x, y };
 }
 
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowUp' && direction !== 'DOWN') nextDirection = 'UP';
+    if (event.key === 'ArrowDown' && direction !== 'UP') nextDirection = 'DOWN';
+    if (event.key === 'ArrowLeft' && direction !== 'RIGHT') nextDirection = 'LEFT';
+    if (event.key === 'ArrowRight' && direction !== 'LEFT') nextDirection = 'RIGHT';
+});
+
 document.getElementById('up').addEventListener('click', () => {
-    if (direction !== 'DOWN') nextDirection = 'UP';
+    if (direction !== 'DOWN' && nextDirection !== 'DOWN') nextDirection = 'UP';
 });
 document.getElementById('down').addEventListener('click', () => {
-    if (direction !== 'UP') nextDirection = 'DOWN';
+    if (direction !== 'UP' && nextDirection !== 'UP') nextDirection = 'DOWN';
 });
 document.getElementById('left').addEventListener('click', () => {
-    if (direction !== 'RIGHT') nextDirection = 'LEFT';
+    if (direction !== 'RIGHT' && nextDirection !== 'RIGHT') nextDirection = 'LEFT';
 });
 document.getElementById('right').addEventListener('click', () => {
-    if (direction !== 'LEFT') nextDirection = 'RIGHT';
+    if (direction !== 'LEFT' && nextDirection !== 'LEFT') nextDirection = 'RIGHT';
 });
 
 document.getElementById('restartBtn').addEventListener('click', () => {
