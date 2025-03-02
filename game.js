@@ -17,7 +17,7 @@ function initializeGame() {
     snake = [{ x: 50, y: 50 }];
     food = generateFood();
     score = 0;
-    direction = null; // Начальное направление NULL
+    direction = 'RIGHT'; // Начальное направление
     document.getElementById('score').textContent = `Очки: ${score}`;
     document.getElementById('restartBtn').style.display = 'none'; // Скрываем кнопку "Возродиться"
     startGame();
@@ -28,11 +28,9 @@ function startGame() {
 }
 
 function updateGame() {
-    if (direction) {  // Если направление выбрано, то продолжаем движение
-        moveSnake(); // Двигаем змейку
-        checkCollision(); // Проверка на столкновение
-        drawGame(); // Рисуем игру
-    }
+    moveSnake(); // Двигаем змейку
+    checkCollision(); // Проверка на столкновение
+    drawGame(); // Рисуем игру
 }
 
 function moveSnake() {
@@ -112,12 +110,11 @@ function generateFood() {
 
 // Управление змейкой через кнопки
 function changeDirection(newDirection) {
-    if (direction === null) {  // Если еще не выбрано направление, начинаем игру
-        direction = newDirection;
-    } else if ((newDirection === 'UP' && direction !== 'DOWN') ||
-               (newDirection === 'DOWN' && direction !== 'UP') ||
-               (newDirection === 'LEFT' && direction !== 'RIGHT') ||
-               (newDirection === 'RIGHT' && direction !== 'LEFT')) {
+    // Проверка, что новое направление не противоположное текущему
+    if ((newDirection === 'UP' && direction !== 'DOWN') ||
+        (newDirection === 'DOWN' && direction !== 'UP') ||
+        (newDirection === 'LEFT' && direction !== 'RIGHT') ||
+        (newDirection === 'RIGHT' && direction !== 'LEFT')) {
         direction = newDirection;
     }
 }
