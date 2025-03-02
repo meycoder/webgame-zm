@@ -1,14 +1,13 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
-const gridSize = 6; // Размер клетки
+const gridSize = 10; // Размер клетки
 const canvasWidth = canvas.width;  // Ширина канваса (350px)
 const canvasHeight = canvas.height; // Высота канваса (300px)
 let snake;
 let food;
 let score;
 let direction;
-let lastFrameTime = 0; // Время последнего обновления
-let speed = 7; // Скорость игры (каждые 100ms, можно уменьшить для более медленного хода)
+let gameInterval;
 let canChangeDirection = true; // Флаг, чтобы избежать смены направления сразу после предыдущего
 
 const foodColor = 'white'; // Белая еда
@@ -25,23 +24,13 @@ function initializeGame() {
 }
 
 function startGame() {
-    requestAnimationFrame(updateGame); // Используем requestAnimationFrame для начала игры
+    gameInterval = setInterval(updateGame, 100); // Интервал обновления (ускорено для лучшего отклика)
 }
 
-function updateGame(timestamp) {
-    // Определяем время, прошедшее с последнего обновления
-    const deltaTime = timestamp - lastFrameTime;
-
-    // Если прошло больше времени, чем нужно для одного шага игры
-    if (deltaTime > 1000 / speed) {
-        lastFrameTime = timestamp; // Обновляем время последнего обновления
-        moveSnake(); // Двигаем змейку
-        checkCollision(); // Проверка на столкновение
-        drawGame(); // Рисуем игру
-    }
-
-    // Запрашиваем следующий кадр игры
-    requestAnimationFrame(updateGame);
+function updateGame() {
+    moveSnake(); // Двигаем змейку
+    checkCollision(); // Проверка на столкновение
+    drawGame(); // Рисуем игру
 }
 
 function moveSnake() {
@@ -82,7 +71,7 @@ function checkCollision() {
 }
 
 function endGame() {
-    cancelAnimationFrame(updateGame); // Останавливаем игру
+    clearInterval(gameInterval); // Останавливаем игру
     document.getElementById('restartBtn').style.display = 'block'; // Показываем кнопку для перезапуска
 }
 
@@ -130,24 +119,10 @@ function changeDirection(newDirection) {
     }
 }
 
-// События для кнопок на экране
 document.getElementById('up').addEventListener('click', () => changeDirection('UP'));
 document.getElementById('down').addEventListener('click', () => changeDirection('DOWN'));
 document.getElementById('left').addEventListener('click', () => changeDirection('LEFT'));
 document.getElementById('right').addEventListener('click', () => changeDirection('RIGHT'));
-
-// События для клавиш на ПК
-window.addEventListener('keydown', (event) => {
-    if (event.key === 'ArrowUp') {
-        changeDirection('UP');
-    } else if (event.key === 'ArrowDown') {
-        changeDirection('DOWN');
-    } else if (event.key === 'ArrowLeft') {
-        changeDirection('LEFT');
-    } else if (event.key === 'ArrowRight') {
-        changeDirection('RIGHT');
-    }
-});
 
 // Кнопка для перезапуска игры
 document.getElementById('restartBtn').addEventListener('click', () => {
