@@ -119,10 +119,24 @@ function changeDirection(newDirection) {
     }
 }
 
+// События для кнопок на экране
 document.getElementById('up').addEventListener('click', () => changeDirection('UP'));
 document.getElementById('down').addEventListener('click', () => changeDirection('DOWN'));
 document.getElementById('left').addEventListener('click', () => changeDirection('LEFT'));
 document.getElementById('right').addEventListener('click', () => changeDirection('RIGHT'));
+
+// События для клавиш на ПК
+window.addEventListener('keydown', (event) => {
+    if (event.key === 'ArrowUp') {
+        changeDirection('UP');
+    } else if (event.key === 'ArrowDown') {
+        changeDirection('DOWN');
+    } else if (event.key === 'ArrowLeft') {
+        changeDirection('LEFT');
+    } else if (event.key === 'ArrowRight') {
+        changeDirection('RIGHT');
+    }
+});
 
 // Кнопка для перезапуска игры
 document.getElementById('restartBtn').addEventListener('click', () => {
