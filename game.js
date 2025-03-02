@@ -90,11 +90,11 @@ function drawGame() {
 snake.forEach((part, index) => {
     const alpha = 1 - index * 0.1; // Прозрачность хвоста уменьшается
 
-    // Создаем линейный градиент с голубыми и зелеными оттенками
+    // Создаем линейный градиент с названиями цветов
     const gradient = ctx.createLinearGradient(part.x, part.y, part.x + gridSize, part.y + gridSize);
-    gradient.addColorStop(0, '#A2DFF7');  // Светло-голубой (начало)
-    gradient.addColorStop(0.5, '#A7D8B8'); // Березовый (середина)
-    gradient.addColorStop(1, '#81C79A');  // Зеленый (конец)
+    gradient.addColorStop(0, 'lightblue');  // Светло-голубой (начало)
+    gradient.addColorStop(0.5, 'paleturquoise'); // Березовый (середина)
+    gradient.addColorStop(1, 'mediumseagreen');  // Зеленый (конец)
 
     // Применяем градиент
     ctx.fillStyle = gradient;
@@ -102,6 +102,7 @@ snake.forEach((part, index) => {
     ctx.arc(part.x + gridSize / 2, part.y + gridSize / 2, gridSize / 2, 0, 2 * Math.PI); // Рисуем круг
     ctx.fill();
 });
+
 
     // Рисуем еду
     ctx.fillStyle = foodColor; // Белая еда
